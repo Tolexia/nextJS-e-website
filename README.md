@@ -1,2 +1,0 @@
-# nextJS e-website
- 
