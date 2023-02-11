@@ -1,0 +1,10 @@
+.nav {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.brand {
+    font-size: 25px;
+    font-weight: bold;
+}
