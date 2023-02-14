@@ -1,5 +1,7 @@
 import { getDatabase, ref, get, set, push, child, onChildAdded, onChildChanged, onChildRemoved  } from "firebase/database"
 import { createRoot } from 'react-dom/client';
+import Link from 'next/link';
+import Image from 'next/image'
 
 function getNewRef(e)
 {
@@ -40,8 +42,19 @@ export default function Add()
           snapshot.forEach((childSnapshot) => {
               const childData = childSnapshot.val();
               console.log(childData)
+              let url = "/product?id="+ encodeURIComponent(childData) ;
+              let filepath = "/images/"+childData.filename;
               let shoe = <div id={i}  key={i} value = {i}>
-                  <span>{childData.name} : {childData.price} €</span>
+                  <Link href = {url}>
+                  <Image
+                      src= {filepath}
+                      alt="cart"
+                      width={100}
+                      height={100}
+                      priority
+                    />
+                    <span>{childData.name} : {childData.price} €</span>
+                  </Link>
               </div>
               shoes.push(shoe)
               i++;
@@ -71,7 +84,7 @@ export default function Add()
   //   });
   return (
     <div>
-        <div id = "shoelist">
+        <div id = "shoelist" className="shoelist">
             {shoes}
         </div>
         <button onClick={e => getNewRef(e, db)}>Ajouter chaussures</button>

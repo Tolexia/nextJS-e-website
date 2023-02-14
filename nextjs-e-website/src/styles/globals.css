@@ -1,3 +1,8 @@
+@font-face {
+  font-family: khan;
+  src: url(./fonts/KumbhSans-VariableFont_wght.ttf);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -20,6 +25,7 @@ body {
     rgb(var(--background-start-rgb)); */
     max-width: 1250px;
     margin: auto;
+    font-family: khan;
 }
 
 a {

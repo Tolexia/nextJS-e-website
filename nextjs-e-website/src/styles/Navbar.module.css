@@ -2,16 +2,31 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    padding-top: 2em;
+    padding-bottom: 3em;
+    border-bottom: 1px solid rgba(210, 210, 210, 0.461);
 }
 
 .navLeft {
-    border: 1px solid red;
     width: 70%;
     display: flex;
-    justify-content:space-around;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.navRight {
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .brand {
     font-size: 25px;
     font-weight: bold;
+}
+
+.avatar {
+    border-radius: 50%;
+    margin-left: 1em;
 }

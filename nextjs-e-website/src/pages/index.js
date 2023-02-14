@@ -1,5 +1,5 @@
 import Head from 'next/head'
-// import Image from 'next/image'
+
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import Add from '@/components/add'
@@ -18,18 +18,8 @@ function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Link style={{"cursor":"pointer"}} href = "/product">Detail</Link>
         <Add />
       </Layout>
-       
-          {/* <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          /> */}
     </>
   )
 }
