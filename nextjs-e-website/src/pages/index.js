@@ -1,11 +1,10 @@
 import Head from 'next/head'
-import Navbar from './_navbar'
 // import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import App from './_app'
-import Add from './_add'
-
+import Add from '@/components/add'
+import Link from 'next/link';
+import Layout from '@/components/layout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,13 +17,11 @@ function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <App /> */}
-        <main className={styles.main}>
-        <Navbar />
-        <div className={styles.center}>
-        <div>
-        
-        </div>
+      <Layout>
+        <Link style={{"cursor":"pointer"}} href = "/product">Detail</Link>
+        <Add />
+      </Layout>
+       
           {/* <Image
             className={styles.logo}
             src="/next.svg"
@@ -33,13 +30,6 @@ function Home() {
             height={37}
             priority
           /> */}
-          
-        </div>
-          <Add />
-        <div className={styles.grid}>
-          
-        </div>
-      </main>
     </>
   )
 }
