@@ -2,6 +2,7 @@ import { getDatabase, ref, get, set, push, child, onChildAdded, onChildChanged, 
 import { createRoot } from 'react-dom/client';
 import Link from 'next/link';
 import Image from 'next/image'
+import styles from '@/styles/Shoeslist.module.css'
 
 function getNewRef(e)
 {
@@ -22,12 +23,7 @@ function insertNewShoes(e, db) {
 
 }
 
-function refreshShoesList()
-{
-
-}
-
-export default function Add()
+export default function Shoeslist()
 {
     const db = getDatabase();
     const dbRef = ref(db);
@@ -45,12 +41,12 @@ export default function Add()
               let url = "/product?id="+ encodeURIComponent(childData) ;
               let filepath = "/images/"+childData.filename;
               let shoe = <div id={i}  key={i} value = {i}>
-                  <Link href = {url}>
+                  <Link href = {url}  className= {styles.shoelistItem}>
                   <Image
                       src= {filepath}
                       alt="cart"
-                      width={100}
-                      height={100}
+                      width={250}
+                      height={250}
                       priority
                     />
                     <span>{childData.name} : {childData.price} €</span>
@@ -60,7 +56,7 @@ export default function Add()
               i++;
           });
           newRoot.render(
-            <ul>
+            <ul  className= {styles.shoelist}>
               {shoes}
             </ul>
           )
@@ -71,20 +67,9 @@ export default function Add()
     }).catch((error) => {
       console.error(error);
     });
-  //   onChildAdded(commentsRef, (data) => {
-  //     addCommentElement(postElement, data.key, data.val().text, data.val().author);
-  //   });
-    
-  //   onChildChanged(commentsRef, (data) => {
-  //     setCommentValues(postElement, data.key, data.val().text, data.val().author);
-  //   });
-    
-  //   onChildRemoved(commentsRef, (data) => {
-  //     deleteComment(postElement, data.key);
-  //   });
   return (
     <div>
-        <div id = "shoelist" className="shoelist">
+        <div id = "shoelist" >
             {shoes}
         </div>
         <button onClick={e => getNewRef(e, db)}>Ajouter chaussures</button>

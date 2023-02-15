@@ -1,0 +1,14 @@
+.shoelist, .shoelistItem {
+    display: flex;
+}
+.shoelist {
+    justify-content: space-around;
+}
+.shoelistItem {
+    flex-direction: column;
+}
+
+.shoelistItem  span {
+    text-align: center;
+    margin-top: 10px;
+}
