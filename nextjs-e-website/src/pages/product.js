@@ -27,16 +27,19 @@ export default function Product(){
                 />
                 </section>
                 <section className={styles.infos}>
-                   <h5 className={styles.brand}>sneakers company</h5>
+                   <h5 className={styles.brand}>sneaker company</h5>
                    <h1 className={styles.model}>Fall Limited Edition Sneakers</h1>
                    <p className={styles.description}>
                         These low-profile sneakers are your perfect casual wear companion. Featuring a durable outer sole, they'll withstand everything the weather can offer.
                    </p>
                    <div className={styles.price}>
-                        <span>125 &euro;</span>
-                        <span>-50%</span>
+                        <span className={styles.priceValue}>$ 125.00</span>
+                        <span className={styles.discount} >50%</span>
                    </div>
                    <span className={styles.initial}>250 &euro;</span>
+                   <div className={styles.handlecart}>
+
+                   </div>
                 </section>
             </div>
         </Layout>

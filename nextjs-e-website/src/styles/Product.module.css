@@ -2,9 +2,47 @@
     display: flex;
 }
 .infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40%;
+    margin: 0 auto;
+}
 
+.brand {
+    font-size: 18px;
+    text-transform: uppercase;
+}
+.model {
+    font-size: 40px;
 }
 
 .mainPicture {
     border-radius: 20px;
+}
+
+.description {
+    line-height: 1.7;
+    color:hsl(219, 9%, 45%);
+}
+
+.brand, .discount {
+    color: hsl(26, 100%, 55%);
+}
+
+.price, .handlecart {
+    display: flex;
+    align-items: center;
+}
+
+.priceValue {
+    font-size: 30px;
+    font-weight: bold;
+} 
+.discount {
+    margin-left: 1em;
+    background-color: hsl(25, 100%, 94%);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
 }
