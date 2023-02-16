@@ -46,3 +46,63 @@
     border-radius: 4px;
     font-weight: bold;
 }
+
+.initial {
+    text-decoration: line-through;
+    color: hsl(220, 14%, 75%);
+}
+
+.handleitem {
+    display: flex;
+    width: 40%;
+    border-radius: 12px;
+}
+
+.handleitem button,  .handleitem input{
+    border: none;
+    background-color: hsl(223, 64%, 98%);
+    padding: 15px 25px;
+}
+
+.itemNb {
+    width: 62px;
+    text-align: center;
+    font-size: 20px;
+}
+
+button.less {
+    border-radius: 8px 0 0 8px;
+    /* padding-left: 20px; */
+}
+button.more {
+    border-radius: 0 8px 8px 0;
+    /* padding-right: 20px; */
+}
+
+.less, .more {
+    color:hsl(26, 100%, 55%);
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.add2cart {
+    width: 60%;
+    background-color: hsl(26, 100%, 55%);
+    color: white;
+    display: flex;
+    justify-content: center;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    box-shadow: 1px 12px 18px 3px rgba(255,237,224,1);
+    -webkit-box-shadow: 1px 12px 18px 3px rgba(255,237,224,1);
+    -moz-box-shadow: 1px 12px 18px 3px rgba(255,237,224,1);
+}
+.cartIcon {
+    margin-right: 10px;
+}
+.cartIcon path{
+    fill: white;
+}

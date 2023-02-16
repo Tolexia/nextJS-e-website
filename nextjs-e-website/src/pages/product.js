@@ -4,6 +4,7 @@ import Head from 'next/head'
 import styles from '@/styles/Product.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
+import { ReactSVG } from "react-svg";
 
 export default function Product(){
     return (
@@ -36,9 +37,24 @@ export default function Product(){
                         <span className={styles.priceValue}>$ 125.00</span>
                         <span className={styles.discount} >50%</span>
                    </div>
-                   <span className={styles.initial}>250 &euro;</span>
+                   <span className={styles.initial}>$ 250.00</span>
                    <div className={styles.handlecart}>
-
+                        <div className={styles.handleitem}>
+                            <button type='button' className={styles.less}>-</button>
+                            <input type='text' className={styles.itemNb} value = "0"/>
+                            <button type='button' className={styles.more}>+</button>
+                        </div>
+                        <button type='button' className={styles.add2cart}>
+                        <ReactSVG
+                            className={styles.cartIcon}
+                            src="/images/icon-cart.svg"
+                            // alt="cart"
+                            // width={17}
+                            // height={17}
+                            // priority
+                        />
+                        Add to cart
+                        </button>
                    </div>
                 </section>
             </div>
