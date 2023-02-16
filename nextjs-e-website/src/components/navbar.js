@@ -8,8 +8,8 @@ export default function Navbar() {
             className={styles.logo}
             src="/images/logo.svg"
             alt="sneakers logo"
-            width={180}
-            height={37}
+            width={138}
+            height={20}
             priority
           />
           <a>Collections</a>
