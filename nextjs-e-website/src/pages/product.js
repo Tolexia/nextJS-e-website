@@ -33,11 +33,13 @@ export default function Product(){
                    <p className={styles.description}>
                         These low-profile sneakers are your perfect casual wear companion. Featuring a durable outer sole, they'll withstand everything the weather can offer.
                    </p>
-                   <div className={styles.price}>
-                        <span className={styles.priceValue}>$ 125.00</span>
-                        <span className={styles.discount} >50%</span>
-                   </div>
+                   <div>
+                    <div className={styles.price}>
+                            <span className={styles.priceValue}>$ 125.00</span>
+                            <span className={styles.discount} >50%</span>
+                    </div>
                    <span className={styles.initial}>$ 250.00</span>
+                   </div>
                    <div className={styles.handlecart}>
                         <div className={styles.handleitem}>
                             <button type='button' className={styles.less}>-</button>

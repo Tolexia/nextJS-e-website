@@ -18,7 +18,8 @@
 }
 
 .mainPicture {
-    border-radius: 20px;
+    max-width: 100vw;
+    height: auto;
 }
 
 .description {
@@ -105,4 +106,19 @@ button.more {
 }
 .cartIcon path{
     fill: white;
+}
+
+@media screen and (min-width: 768px) {
+    .mainPicture {
+        border-radius: 20px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .infos {
+        width: 90%;
+    }
 }
