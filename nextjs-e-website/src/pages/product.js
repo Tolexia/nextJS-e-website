@@ -1,12 +1,14 @@
-import Shoeslist from '@/components/shoeslist'
 import Layout from '@/components/layout'
 import Head from 'next/head'
 import styles from '@/styles/Product.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ReactSVG } from "react-svg";
+import React, { useState } from 'react';
 
 export default function Product(){
+    const [count, setCount] = useState(0);
+    
     return (
     <>
         <Head>
@@ -42,9 +44,9 @@ export default function Product(){
                    </div>
                    <div className={styles.handlecart}>
                         <div className={styles.handleitem}>
-                            <button type='button' className={styles.less}>-</button>
-                            <input type='text' className={styles.itemNb} value = "0"/>
-                            <button type='button' className={styles.more}>+</button>
+                            <button type='button' onClick={() => setCount( count > 1 ? count + -1 : 0)} className={styles.less}>-</button>
+                            <input type='text' className={styles.itemNb} defaultValue = {count}/>
+                            <button type='button' onClick={() => setCount(count + 1)} className={styles.more}>+</button>
                         </div>
                         <button type='button' className={styles.add2cart}>
                         <ReactSVG

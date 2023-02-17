@@ -1,6 +1,9 @@
 import styles from '@/styles/Navbar.module.css'
 import Image from 'next/image'
+import React, { useState } from 'react';
+
 export default function Navbar() {
+  let [active, setactive] = useState(styles.noactive);
   return (
     <nav className={styles.nav}>
         <div className={styles.navLeft}>
@@ -19,14 +22,25 @@ export default function Navbar() {
           <a>Contact</a>
         </div>
         <div className={styles.navRight}>
-          <Image
-            className={styles.test}
-            src="/images/icon-cart.svg"
-            alt="cart"
-            width={21}
-            height={21}
-            priority
-          />
+          <div className={styles.cartSection}>
+            <Image
+              className={styles.test}
+              src="/images/icon-cart.svg"
+              alt="cart"
+              width={21}
+              height={21}
+              priority
+              onClick={() => setactive(active == styles.noactive ? active = styles.active : active = styles.noactive)}
+              /> 
+            <div className={[styles.cartDisplay, active].join(' ')}>
+              <span className={styles.cartDisplayTitle}>Cart</span>
+              <p>
+                <span>
+                  Your cart is empty.
+                </span>
+              </p>
+            </div>
+          </div>
           <Image
             className={styles.avatar}
             src="/images/tolexia.jpg"
