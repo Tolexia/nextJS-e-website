@@ -5,10 +5,63 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ReactSVG } from "react-svg";
 import React, { useState } from 'react';
+import { createRoot } from 'react-dom/client';
 
 export default function Product(){
     const [count, setCount] = useState(0);
-    
+    const item = {
+        price : 125,
+        name : "Fall Limited Edition Sneakers",
+        img : "/images/image-product-1.jpg",
+    }
+    function addItemToCart(count, item)
+    {
+        item.nb = count;
+        if(localStorage.getItem('cart') == null)
+        {
+            const json = JSON.stringify([item]);
+            localStorage.setItem('cart', json)
+        }
+        else
+        {
+            const currentCart = JSON.parse(localStorage.getItem('cart'));
+            console.log(currentCart)
+            currentCart.push(item);
+            localStorage.setItem('cart', JSON.stringify(currentCart));
+        }
+        refreshCart()
+    }
+    function refreshCart()
+    {
+        const cartItems = JSON.parse(localStorage.getItem('cart'));
+        const cartDiv = document.querySelector('#cart div');
+        let i = 0;
+        let root = createRoot(cartDiv);
+        const order = [];
+        cartItems.forEach((item) => {
+            let shoe = 
+            <div id={i}  key={i} value = {i} className = {styles.cartItem}>
+                <Image
+                    src= {item.img}
+                    alt={item.name}
+                    width={30}
+                    height={30}
+                    priority
+                  />
+                  <div className = {styles.itemDescription}>
+                    <span>{item.name}</span>
+                    <span>${item.price} x {item.nb} <b>${parseFloat(item.price) * item.nb}</b></span>
+                  </div>
+            </div>
+            order.push(shoe)
+            i++;
+        });
+        root.render(
+          <div>
+            {order}
+          </div>
+        )
+    }
     return (
     <>
         <Head>
@@ -48,7 +101,7 @@ export default function Product(){
                             <input type='text' className={styles.itemNb} defaultValue = {count}/>
                             <button type='button' onClick={() => setCount(count + 1)} className={styles.more}>+</button>
                         </div>
-                        <button type='button' className={styles.add2cart}>
+                        <button type='button' className={styles.add2cart} onClick = {() => addItemToCart(count, item)}>
                         <ReactSVG
                             className={styles.cartIcon}
                             src="/images/icon-cart.svg"

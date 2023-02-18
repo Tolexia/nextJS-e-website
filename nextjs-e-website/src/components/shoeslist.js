@@ -33,34 +33,33 @@ export default function Shoeslist()
       if (snapshot.exists()) 
       {
         const divList = document.querySelector('#shoelist');
-          let i = 0;
-          let newRoot = createRoot(divList);
-          snapshot.forEach((childSnapshot) => {
-              const childData = childSnapshot.val();
-              console.log(childData)
-              let url = "/product?id="+ encodeURIComponent(childData.name) ;
-              let filepath = "/images/"+childData.filename;
-              let shoe = <div id={i}  key={i} value = {i}>
-                  <Link href = {url}  className= {styles.shoelistItem}>
-                  <Image
-                      src= {filepath}
-                      alt="cart"
-                      width={250}
-                      height={250}
-                      priority
-                    />
-                    <span>{childData.name} : {childData.price} €</span>
-                  </Link>
-              </div>
-              shoes.push(shoe)
-              i++;
-          });
-          newRoot.render(
-            <ul  className= {styles.shoelist}>
-              {shoes}
-            </ul>
-          )
-          
+        let i = 0;
+        let newRoot = createRoot(divList);
+        snapshot.forEach((childSnapshot) => {
+            const childData = childSnapshot.val();
+            console.log(childData)
+            let url = "/product?id="+ encodeURIComponent(childData.name) ;
+            let filepath = "/images/"+childData.filename;
+            let shoe = <div id={i}  key={i} value = {i}>
+                <Link href = {url}  className= {styles.shoelistItem}>
+                <Image
+                    src= {filepath}
+                    alt="cart"
+                    width={250}
+                    height={250}
+                    priority
+                  />
+                  <span>{childData.name} : {childData.price} €</span>
+                </Link>
+            </div>
+            shoes.push(shoe)
+            i++;
+        });
+        newRoot.render(
+          <ul  className= {styles.shoelist}>
+            {shoes}
+          </ul>
+        )
       } else {
         console.log("No data available");
       }

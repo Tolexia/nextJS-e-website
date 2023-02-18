@@ -32,13 +32,15 @@ export default function Navbar() {
               priority
               onClick={() => setactive(active == styles.noactive ? active = styles.active : active = styles.noactive)}
               /> 
-            <div className={[styles.cartDisplay, active].join(' ')}>
+            <div className={[styles.cartDisplay, active].join(' ')} id = "cart">
               <span className={styles.cartDisplayTitle}>Cart</span>
-              <p>
-                <span>
-                  Your cart is empty.
-                </span>
-              </p>
+              <div>
+                <p>
+                  <span>
+                    Your cart is empty.
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
           <Image

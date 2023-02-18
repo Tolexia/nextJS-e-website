@@ -42,11 +42,12 @@
 .cartDisplay {
     position: absolute;
     width: 231px;
-    height: 130px;
+    height: max-content;
     z-index: 2;
     left: -150px;
     background: #fff;
     box-shadow: 0 5px 21px 0px  hsl(220, 14%, 75%);
+    padding: 10px 0;
 }
 
 .noactive {
