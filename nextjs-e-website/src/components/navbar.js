@@ -1,9 +1,10 @@
 import styles from '@/styles/Navbar.module.css'
 import Image from 'next/image'
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
-export default function Navbar() {
+export default function Navbar({cart, ...props}) {
   let [active, setactive] = useState(styles.noactive);
+  // const currentCart = useContext(Cart);
   return (
     <nav className={styles.nav}>
         <div className={styles.navLeft}>
@@ -35,11 +36,7 @@ export default function Navbar() {
             <div className={[styles.cartDisplay, active].join(' ')} id = "cart">
               <span className={styles.cartDisplayTitle}>Cart</span>
               <div>
-                <p>
-                  <span>
-                    Your cart is empty.
-                  </span>
-                </p>
+                {cart}
               </div>
             </div>
           </div>

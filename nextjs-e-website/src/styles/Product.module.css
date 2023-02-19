@@ -108,15 +108,7 @@ button.more {
     fill: white;
 }
 
-.itemDescription {
-    display: inline-flex;
-    flex-direction: column;
-    font-size: 14px;
-}
-.cartItem {
-    display: flex;
-    padding: 10px;
-}
+
 @media screen and (min-width: 768px) {
     .mainPicture {
         border-radius: 20px;

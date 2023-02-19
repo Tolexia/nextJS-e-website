@@ -8,6 +8,10 @@ import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 export default function Product(){
+    const[cart, setCart] = useState(null)
+    const refreshCart = (data) => {
+        setCart(data);
+      }
     const [count, setCount] = useState(0);
     const item = {
         price : 125,
@@ -25,42 +29,10 @@ export default function Product(){
         else
         {
             const currentCart = JSON.parse(localStorage.getItem('cart'));
-            console.log(currentCart)
             currentCart.push(item);
             localStorage.setItem('cart', JSON.stringify(currentCart));
         }
         refreshCart()
-    }
-    function refreshCart()
-    {
-        const cartItems = JSON.parse(localStorage.getItem('cart'));
-        const cartDiv = document.querySelector('#cart div');
-        let i = 0;
-        let root = createRoot(cartDiv);
-        const order = [];
-        cartItems.forEach((item) => {
-            let shoe = 
-            <div id={i}  key={i} value = {i} className = {styles.cartItem}>
-                <Image
-                    src= {item.img}
-                    alt={item.name}
-                    width={30}
-                    height={30}
-                    priority
-                  />
-                  <div className = {styles.itemDescription}>
-                    <span>{item.name}</span>
-                    <span>${item.price} x {item.nb} <b>${parseFloat(item.price) * item.nb}</b></span>
-                  </div>
-            </div>
-            order.push(shoe)
-            i++;
-        });
-        root.render(
-          <div>
-            {order}
-          </div>
-        )
     }
     return (
     <>
@@ -70,7 +42,7 @@ export default function Product(){
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Layout>
+        <Layout refreshCart = {refreshCart}>
             <div className={styles.wrapper}>
                 <section className={styles.gallery}>
                 <Image
