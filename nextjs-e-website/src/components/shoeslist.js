@@ -37,7 +37,6 @@ export default function Shoeslist()
         let newRoot = createRoot(divList);
         snapshot.forEach((childSnapshot) => {
             const childData = childSnapshot.val();
-            console.log(childData)
             let url = "/product?id="+ encodeURIComponent(childData.name) ;
             let filepath = "/images/"+childData.filename;
             let shoe = <div id={i}  key={i} value = {i}>

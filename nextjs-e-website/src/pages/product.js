@@ -34,6 +34,7 @@ export default function Product(){
         }
         refreshCart()
     }
+
     return (
     <>
         <Head>
@@ -42,7 +43,7 @@ export default function Product(){
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Layout refreshCart = {refreshCart}>
+        <Layout refreshCart = {refreshCart} >
             <div className={styles.wrapper}>
                 <section className={styles.gallery}>
                 <Image

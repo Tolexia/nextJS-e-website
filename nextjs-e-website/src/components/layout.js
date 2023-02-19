@@ -5,7 +5,21 @@ import React, {useState,useEffect} from 'react';
 
 export default function Layout({children, ...props})
 {
+    const refreshCart = (data) => {
+        setCart(data);
+      }
     const [cart, setCart] = useState(<p>Your cart is empty.</p>)
+    function removeItemFromCart(index)
+    {
+        console.log(index)
+        const currentCart = JSON.parse(localStorage.getItem('cart'));
+        const clone = currentCart
+        console.log(clone)
+        currentCart.splice(index, 1);
+        console.log(currentCart)
+        localStorage.setItem('cart', JSON.stringify(currentCart));
+        refreshCart();
+    }
     useEffect(() => {
         if(localStorage.getItem('cart') != null)
         {
@@ -20,12 +34,12 @@ export default function Layout({children, ...props})
                         alt={item.name}
                         width={40}
                         height={40}
-                        priority
                     />
                     <div className = {styles.itemDescription}>
                         <span>{item.name}</span>
                         <span>${item.price} x {item.nb} <b>${parseFloat(item.price) * item.nb}</b></span>
                     </div>
+                    <span onClick={() => removeItemFromCart(i)}>X</span>
                 </div>
                 order.push(shoe)
                 i++;
@@ -35,7 +49,7 @@ export default function Layout({children, ...props})
                 {order}
             </div>)
         }
-    })
+    }, [])
     return (
         <>
             <Navbar cart = {cart} />
