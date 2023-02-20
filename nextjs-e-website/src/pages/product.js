@@ -6,46 +6,38 @@ import Image from 'next/image'
 import { ReactSVG } from "react-svg";
 import React, { useState, useRef,useEffect } from 'react';
 import { useRouter } from 'next/router'
-import {query, getDatabase, ref, get, set, push, child, onChildAdded, onChildChanged, onChildRemoved,orderByKey, orderByChild,orderByValue, equalTo  } from "firebase/database"
+import {query, onValue, getDatabase, ref, get, set, push, child, onChildAdded, onChildChanged, onChildRemoved,orderByKey, orderByChild,orderByValue, equalTo  } from "firebase/database"
 
 export default function Product(){
     const router = useRouter();
     const [item, setItem] = useState({
-        price : 125,
+        price : '125.00',
         name : "Fall Limited Edition Sneakers",
-        img : "/images/image-product-1.jpg",
+        filename : "/images/image-product-1.jpg",
     })
     if(router.query)
     {
         const productName = router.query.id;
-        console.log(productName);
         const db = getDatabase();
         const dbRef = ref(db);
         if(productName != undefined && productName != null)
         {
-            // const thisShoe = query(ref(db, 'shoes'), limitToLast(100));
-            const ShoesRef = query(ref(db, 'shoes'), orderByValue('name'), equalTo(productName))
+            const ShoesRef = query(ref(db, 'shoes'), orderByChild('name'), equalTo(productName))
           
-            onChildAdded(ShoesRef, (data) => {
-                console.log(data);
-            });
-            
-            onChildChanged(ShoesRef, (data) => {
-                console.log(data);
-            });
-            
-            onChildRemoved(ShoesRef, (data) => {
-                console.log(data);
+            onValue(ShoesRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    const childData = childSnapshot.val();
+                    if(!childData.filename.match('images'))
+                    {
+                        childData.filename = "/images/"+childData.filename
+                    }
+                    setItem(childData)
+                });
+              }, {
+                onlyOnce: true
             });
         }
                 
-        // get(child(dbRef, `shoes`, orderByKey('name'), equalTo(productName)))
-        // .then((snapshot) => {
-        //   if (snapshot.exists()) 
-        //   {
-        //     console.log(snapshot.val());
-        //   }
-        // })
        
     }
     const refreshCart = useRef();
@@ -84,7 +76,7 @@ export default function Product(){
                 <section className={styles.gallery}>
                 <Image
                     className={styles.mainPicture}
-                    src= "/images/image-product-1.jpg"
+                    src= {item.filename}
                     alt="cart"
                     width={500}
                     height={500}
@@ -93,16 +85,16 @@ export default function Product(){
                 </section>
                 <section className={styles.infos}>
                    <h5 className={styles.brand}>sneaker company</h5>
-                   <h1 className={styles.model}>Fall Limited Edition Sneakers</h1>
+                   <h1 className={styles.model}>{item.name}</h1>
                    <p className={styles.description}>
                         These low-profile sneakers are your perfect casual wear companion. Featuring a durable outer sole, they'll withstand everything the weather can offer.
                    </p>
                    <div>
                     <div className={styles.price}>
-                            <span className={styles.priceValue}>$ 125.00</span>
-                            <span className={styles.discount} >50%</span>
+                            <span className={styles.priceValue}>$ {item.price}</span>
+                            <span className={styles.discount} >{item.discount}%</span>
                     </div>
-                   <span className={styles.initial}>$ 250.00</span>
+                   <span className={styles.initial}>$ {item.price*(item.discount/100)}</span>
                    </div>
                    <div className={styles.handlecart}>
                         <div className={styles.handleitem}>
