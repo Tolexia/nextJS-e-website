@@ -1,22 +1,23 @@
-import Navbar from './navbar'
 import Script from 'next/script'
 import styles from "@/styles/layout.module.css";
 import React, {useState,useEffect, useImperativeHandle, forwardRef} from 'react';
+import Image from 'next/image'
 
  const Layout = forwardRef(({children}, ref) => 
 {
+    let [active, setactive] = useState(styles.noactive);
     const [cart, setCart] = useState(<p>Your cart is empty.</p>)
     useImperativeHandle(
         ref,
         () => ({
-                cartInit
+                cartInit,
+                setactive,
         }),
-        [cart]
+        [cart,styles.active,styles.noactive]
       );
     function removeItemFromCart(index)
     {
         const currentCart = JSON.parse(localStorage.getItem('cart'));
-        const clone = currentCart
         currentCart.splice(index, 1);
         localStorage.setItem('cart', JSON.stringify(currentCart));
         cartInit();
@@ -40,7 +41,7 @@ import React, {useState,useEffect, useImperativeHandle, forwardRef} from 'react'
                         <span>{item.name}</span>
                         <span>${item.price} x {item.nb} <b>${parseFloat(item.price) * item.nb}</b></span>
                     </div>
-                    <span data-id = {i} onClick={e => removeItemFromCart(e.target.dataset.id)}>X</span>
+                    <span className= {styles.removal} data-id = {i} onClick={e => confirm("Remove this item ?") ? removeItemFromCart(e.target.dataset.id) : ""}>X</span>
                 </div>
                 order.push(shoe)
                 i++;
@@ -56,7 +57,50 @@ import React, {useState,useEffect, useImperativeHandle, forwardRef} from 'react'
     }, [])
     return (
         <>
-            <Navbar cart = {cart} />
+            <nav className={styles.nav}>
+                <div className={styles.navLeft}>
+                <Image
+                    className={styles.logo}
+                    src="/images/logo.svg"
+                    alt="sneakers logo"
+                    width={138}
+                    height={20}
+                    priority
+                />
+                <a>Collections</a>
+                <a>Men</a>
+                <a>Women</a>
+                <a>About</a>
+                <a>Contact</a>
+                </div>
+                <div className={styles.navRight}>
+                <div className={styles.cartSection}>
+                    <Image
+                    className={styles.test}
+                    src="/images/icon-cart.svg"
+                    alt="cart"
+                    width={21}
+                    height={21}
+                    priority
+                    onClick={() => setactive(active == styles.noactive ? styles.active : styles.noactive)}
+                    /> 
+                    <div className={[styles.cartDisplay, active].join(' ')} id = "cart">
+                    <span className={styles.cartDisplayTitle}>Cart</span>
+                    <div>
+                        {cart}
+                    </div>
+                    </div>
+                </div>
+                <Image
+                    className={styles.avatar}
+                    src="/images/tolexia.jpg"
+                    alt="Next.js Logo"
+                    width={45}
+                    height={45}
+                    priority
+                />
+                </div>
+            </nav>
             <main className= {styles.mainwrapper}>
                 {React.cloneElement(children, {
                     cart: cart

@@ -88,6 +88,7 @@ button.more {
 }
 
 .add2cart {
+    cursor: pointer;
     width: 60%;
     background-color: hsl(26, 100%, 55%);
     color: white;

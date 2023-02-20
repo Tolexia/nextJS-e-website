@@ -5,17 +5,51 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ReactSVG } from "react-svg";
 import React, { useState, useRef,useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
+import { useRouter } from 'next/router'
+import {query, getDatabase, ref, get, set, push, child, onChildAdded, onChildChanged, onChildRemoved,orderByKey, orderByChild,orderByValue, equalTo  } from "firebase/database"
 
 export default function Product(){
-    const [cart, setCart] = useState(<p>Your cart is empty.</p>)
-    const refreshCart = useRef();
-    const [count, setCount] = useState(0);
-    const item = {
+    const router = useRouter();
+    const [item, setItem] = useState({
         price : 125,
         name : "Fall Limited Edition Sneakers",
         img : "/images/image-product-1.jpg",
+    })
+    if(router.query)
+    {
+        const productName = router.query.id;
+        console.log(productName);
+        const db = getDatabase();
+        const dbRef = ref(db);
+        if(productName != undefined && productName != null)
+        {
+            // const thisShoe = query(ref(db, 'shoes'), limitToLast(100));
+            const ShoesRef = query(ref(db, 'shoes'), orderByValue('name'), equalTo(productName))
+          
+            onChildAdded(ShoesRef, (data) => {
+                console.log(data);
+            });
+            
+            onChildChanged(ShoesRef, (data) => {
+                console.log(data);
+            });
+            
+            onChildRemoved(ShoesRef, (data) => {
+                console.log(data);
+            });
+        }
+                
+        // get(child(dbRef, `shoes`, orderByKey('name'), equalTo(productName)))
+        // .then((snapshot) => {
+        //   if (snapshot.exists()) 
+        //   {
+        //     console.log(snapshot.val());
+        //   }
+        // })
+       
     }
+    const refreshCart = useRef();
+    const [count, setCount] = useState(0);
     function addItemToCart(count, item)
     {
         item.nb = count;
@@ -33,6 +67,7 @@ export default function Product(){
         if(refreshCart.current)
         {
             refreshCart.current.cartInit();
+            refreshCart.current.setactive("active");
         }
     }
 
