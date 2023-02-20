@@ -4,14 +4,12 @@ import styles from '@/styles/Product.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ReactSVG } from "react-svg";
-import React, { useState } from 'react';
+import React, { useState, useRef,useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 
 export default function Product(){
-    const[cart, setCart] = useState(null)
-    const refreshCart = (data) => {
-        setCart(data);
-      }
+    const [cart, setCart] = useState(<p>Your cart is empty.</p>)
+    const refreshCart = useRef();
     const [count, setCount] = useState(0);
     const item = {
         price : 125,
@@ -32,7 +30,10 @@ export default function Product(){
             currentCart.push(item);
             localStorage.setItem('cart', JSON.stringify(currentCart));
         }
-        refreshCart()
+        if(refreshCart.current)
+        {
+            refreshCart.current.cartInit();
+        }
     }
 
     return (
@@ -43,7 +44,7 @@ export default function Product(){
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Layout refreshCart = {refreshCart} >
+        <Layout ref= {refreshCart} >
             <div className={styles.wrapper}>
                 <section className={styles.gallery}>
                 <Image

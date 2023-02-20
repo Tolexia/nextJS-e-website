@@ -1,26 +1,27 @@
 import Navbar from './navbar'
 import Script from 'next/script'
 import styles from "@/styles/layout.module.css";
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect, useImperativeHandle, forwardRef} from 'react';
 
-export default function Layout({children, ...props})
+ const Layout = forwardRef(({children}, ref) => 
 {
-    const refreshCart = (data) => {
-        setCart(data);
-      }
     const [cart, setCart] = useState(<p>Your cart is empty.</p>)
+    useImperativeHandle(
+        ref,
+        () => ({
+                cartInit
+        }),
+        [cart]
+      );
     function removeItemFromCart(index)
     {
-        console.log(index)
         const currentCart = JSON.parse(localStorage.getItem('cart'));
         const clone = currentCart
-        console.log(clone)
         currentCart.splice(index, 1);
-        console.log(currentCart)
         localStorage.setItem('cart', JSON.stringify(currentCart));
-        refreshCart();
+        cartInit();
     }
-    useEffect(() => {
+    function cartInit() {
         if(localStorage.getItem('cart') != null)
         {
             let i = 0;
@@ -39,7 +40,7 @@ export default function Layout({children, ...props})
                         <span>{item.name}</span>
                         <span>${item.price} x {item.nb} <b>${parseFloat(item.price) * item.nb}</b></span>
                     </div>
-                    <span onClick={() => removeItemFromCart(i)}>X</span>
+                    <span data-id = {i} onClick={e => removeItemFromCart(e.target.dataset.id)}>X</span>
                 </div>
                 order.push(shoe)
                 i++;
@@ -49,6 +50,9 @@ export default function Layout({children, ...props})
                 {order}
             </div>)
         }
+    }
+    useEffect(() => {
+        cartInit()
     }, [])
     return (
         <>
@@ -61,4 +65,5 @@ export default function Layout({children, ...props})
         </>
     )
     
-}
+})
+export default Layout;
