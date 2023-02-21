@@ -8,38 +8,8 @@ import React, { useState, useRef,useEffect } from 'react';
 import { useRouter } from 'next/router'
 import {query, onValue, getDatabase, ref, get, set, push, child, onChildAdded, onChildChanged, onChildRemoved,orderByKey, orderByChild,orderByValue, equalTo  } from "firebase/database"
 
-export default function Product(){
-    const router = useRouter();
-    const [item, setItem] = useState({
-        price : '125.00',
-        name : "Fall Limited Edition Sneakers",
-        filename : "/images/image-product-1.jpg",
-    })
-    if(router.query)
-    {
-        const productName = router.query.id;
-        const db = getDatabase();
-        const dbRef = ref(db);
-        if(productName != undefined && productName != null)
-        {
-            const ShoesRef = query(ref(db, 'shoes'), orderByChild('name'), equalTo(productName))
-          
-            onValue(ShoesRef, (snapshot) => {
-                snapshot.forEach((childSnapshot) => {
-                    const childData = childSnapshot.val();
-                    if(!childData.filename.match('images'))
-                    {
-                        childData.filename = "/images/"+childData.filename
-                    }
-                    setItem(childData)
-                });
-              }, {
-                onlyOnce: true
-            });
-        }
-                
-       
-    }
+function Product({item}){
+    console.log(item);
     const refreshCart = useRef();
     const [count, setCount] = useState(0);
     function addItemToCart(count, item)
@@ -120,3 +90,23 @@ export default function Product(){
     </>
     )
 }
+Product.getInitialProps = async (context) => {
+    let item = {};
+    const productName = context.query.id;
+    const db = getDatabase();
+    return get(query(ref(db, 'shoes'), orderByChild('name'), equalTo(productName)))
+    .then(snapshot => {
+        item =Object.entries(snapshot.val())[0][1];
+        if(!item.filename.match('images'))
+        {
+            item.filename = "/images/"+item.filename
+        }
+        return {
+            item:item
+        }
+       
+        
+    })
+}
+
+export default Product
