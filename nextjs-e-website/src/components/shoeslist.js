@@ -95,6 +95,10 @@ export default function Shoeslist()
         <div className='fakeform' style={{"display":"none"}}>
             <input type="text" id = "name" placeholder='Name'/>
             <input type="text" id = "price" placeholder='Price' />
+            <input type="text" id = "discount" placeholder='discount' />
+            <input type="text" id = "filename" placeholder='filename' />
+            <input type="text" id = "brand" placeholder='brand' />
+            <textarea id = "description"></textarea>
             <div>
               <img src={createObjectURL} />
               <h4>Select Image</h4>
