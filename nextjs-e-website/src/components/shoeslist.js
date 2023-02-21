@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import Link from 'next/link';
 import Image from 'next/image'
 import styles from '@/styles/Shoeslist.module.css'
+import React, { useState, useRef,useEffect } from 'react';
+
 
 function getNewRef(e)
 {
@@ -25,6 +27,25 @@ function insertNewShoes(e, db) {
 
 export default function Shoeslist()
 {
+    const [image, setImage] = useState(null);
+    const [createObjectURL, setCreateObjectURL] = useState(null);
+
+    const uploadToClient = (event) => {
+      if (event.target.files && event.target.files[0]) {
+        const i = event.target.files[0];
+        setImage(i);
+        setCreateObjectURL(URL.createObjectURL(i));
+      }
+    };
+
+    const uploadToServer = async (event) => {
+      const body = new FormData();
+      body.append("file", image);
+      const response = await fetch("/api/file", {
+        method: "POST",
+        body
+      });
+    };
     const db = getDatabase();
     const dbRef = ref(db);
     const shoes = [];
@@ -70,11 +91,23 @@ export default function Shoeslist()
         <div id = "shoelist" >
             {shoes}
         </div>
-        <button onClick={e => getNewRef(e, db)}>Ajouter chaussures</button>
+        <button onClick={e => getNewRef(e, db)}>Add shoes</button>
         <div className='fakeform' style={{"display":"none"}}>
             <input type="text" id = "name" placeholder='Name'/>
             <input type="text" id = "price" placeholder='Price' />
-            <button onClick={e => insertNewShoes(e, db)}>Enregistrer</button>
+            <div>
+              <img src={createObjectURL} />
+              <h4>Select Image</h4>
+              <input type="file" name="myImage" onChange={uploadToClient} />
+              <button
+                className="btn btn-primary"
+                type="submit"
+                onClick={uploadToServer}
+                >
+                Send to server
+              </button>
+            </div>
+            <button onClick={e => insertNewShoes(e, db)}>Save</button>
         </div>
     </div>
   )
