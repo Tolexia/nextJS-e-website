@@ -54,17 +54,17 @@ function Product({item}){
                 />
                 </section>
                 <section className={styles.infos}>
-                   <h5 className={styles.brand}>sneaker company</h5>
+                   <h5 className={styles.brand}>{item.brand}</h5>
                    <h1 className={styles.model}>{item.name}</h1>
                    <p className={styles.description}>
-                        These low-profile sneakers are your perfect casual wear companion. Featuring a durable outer sole, they'll withstand everything the weather can offer.
+                    {item.description}
                    </p>
                    <div>
                     <div className={styles.price}>
                             <span className={styles.priceValue}>$ {item.price}</span>
-                            <span className={styles.discount} >{item.discount}%</span>
+                            {item.discount != undefined && parseInt(item.discount) > 0 ? <span className={styles.discount} >{item.discount}%</span> : null}
                     </div>
-                   <span className={styles.initial}>$ {item.price*(item.discount/100)}</span>
+                        {item.discount != undefined && parseInt(item.discount) > 0 ?  <span className={styles.initial}>$ {item.price*(item.discount/100)}</span> : null}
                    </div>
                    <div className={styles.handlecart}>
                         <div className={styles.handleitem}>

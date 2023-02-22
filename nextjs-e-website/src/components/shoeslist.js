@@ -6,33 +6,38 @@ import styles from '@/styles/Shoeslist.module.css'
 import React, { useState, useRef,useEffect } from 'react';
 
 
-function getNewRef(e)
-{
-  const button = e.target;
-  button.parentNode.querySelector('.fakeform').style.display = "block";
-}
-function insertNewShoes(e, db) {
-    let name = e.target.parentNode.querySelector("#name").value;
-    let price = e.target.parentNode.querySelector("#price").value;
-    const postData =  {
-        name: name,
-        price: price,
-    }
-
-    const postListRef = ref(db, 'shoes');
-    const newPostRef = push(postListRef);
-    set(newPostRef, postData);
-
-}
 
 export default function Shoeslist()
 {
     const [image, setImage] = useState(null);
     const [createObjectURL, setCreateObjectURL] = useState(null);
+    const [shoeslist, setShoeslist] = useState(<div id = "shoelist" ></div>);
+    function getNewRef(e)
+    {
+      const button = e.target;
+      button.parentNode.querySelector('.fakeform').style.display = "flex";
+    }
+    function insertNewShoes(e, db) {
+        let name = e.target.parentNode.querySelector("#name").value;
+        let price = e.target.parentNode.querySelector("#price").value;
+        const postData =  {
+            name: name,
+            price: price,
+            discount: discount,
+            brand: brand,
+            description: description,
+            filename: image.name
+        }
 
+        const postListRef = ref(db, 'shoes');
+        const newPostRef = push(postListRef);
+        set(newPostRef, postData);
+        uploadToServer()
+    }
     const uploadToClient = (event) => {
       if (event.target.files && event.target.files[0]) {
         const i = event.target.files[0];
+        console.log(i);
         setImage(i);
         setCreateObjectURL(URL.createObjectURL(i));
       }
@@ -53,9 +58,7 @@ export default function Shoeslist()
     .then((snapshot) => {
       if (snapshot.exists()) 
       {
-        const divList = document.querySelector('#shoelist');
         let i = 0;
-        let newRoot = createRoot(divList);
         snapshot.forEach((childSnapshot) => {
             const childData = childSnapshot.val();
             let url = "/product?id="+ encodeURIComponent(childData.name) ;
@@ -65,20 +68,21 @@ export default function Shoeslist()
                 <Image
                     src= {filepath}
                     alt="cart"
-                    width={250}
-                    height={250}
+                    width={100}
+                    height={100}
                     priority
                   />
-                  <span>{childData.name} : {childData.price} €</span>
+                  <span>{childData.name} : ${childData.price}</span>
                 </Link>
             </div>
             shoes.push(shoe)
             i++;
         });
-        newRoot.render(
+        setShoeslist(<div id = "shoelist" >
           <ul  className= {styles.shoelist}>
             {shoes}
           </ul>
+        </div>
         )
       } else {
         console.log("No data available");
@@ -88,30 +92,27 @@ export default function Shoeslist()
     });
   return (
     <div>
-        <div id = "shoelist" >
-            {shoes}
-        </div>
+        {shoeslist}
         <button onClick={e => getNewRef(e, db)}>Add shoes</button>
-        <div className='fakeform' style={{"display":"none"}}>
+        <div className={'fakeform '+styles.fakeform} style={{"display":"none"}}>
             <input type="text" id = "name" placeholder='Name'/>
             <input type="text" id = "price" placeholder='Price' />
             <input type="text" id = "discount" placeholder='discount' />
-            <input type="text" id = "filename" placeholder='filename' />
             <input type="text" id = "brand" placeholder='brand' />
             <textarea id = "description"></textarea>
-            <div>
+            <div className= {styles.fileupload}>
               <img src={createObjectURL} />
               <h4>Select Image</h4>
               <input type="file" name="myImage" onChange={uploadToClient} />
-              <button
+              {/* <button
                 className="btn btn-primary"
                 type="submit"
                 onClick={uploadToServer}
                 >
                 Send to server
-              </button>
+              </button> */}
             </div>
-            <button onClick={e => insertNewShoes(e, db)}>Save</button>
+            <button className= {styles.save} onClick={e => insertNewShoes(e, db)}>Save</button>
         </div>
     </div>
   )
