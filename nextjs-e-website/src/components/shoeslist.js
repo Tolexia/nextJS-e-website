@@ -93,7 +93,7 @@ export default function Shoeslist()
   return (
     <div>
         {shoeslist}
-        <button onClick={e => getNewRef(e, db)}>Add shoes</button>
+        <button className= {styles.save} onClick={e => getNewRef(e, db)}>New</button>
         <div className={'fakeform '+styles.fakeform} style={{"display":"none"}}>
             <input type="text" id = "name" placeholder='Name'/>
             <input type="text" id = "price" placeholder='Price' />

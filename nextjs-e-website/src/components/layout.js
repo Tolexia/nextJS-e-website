@@ -6,6 +6,7 @@ import Image from 'next/image'
  const Layout = forwardRef(({children}, ref) => 
 {
     let [active, setactive] = useState(styles.noactive);
+    let [itemcount, setitemcount] = useState(0);
     const [cart, setCart] = useState(<p>Your cart is empty.</p>)
     useImperativeHandle(
         ref,
@@ -28,7 +29,9 @@ import Image from 'next/image'
             let i = 0;
             const order = [];
             const cartItems = JSON.parse(localStorage.getItem('cart'));
+            let newItemCount = 0;
             cartItems.forEach((item) => {
+                newItemCount += item.nb;
                 let shoe = 
                 <div id={i}  key={i} value = {i} className = {styles.cartItem}>
                     <img
@@ -50,6 +53,7 @@ import Image from 'next/image'
             <div>
                 {order}
             </div>)
+            setitemcount(newItemCount)
         }
     }
     useEffect(() => {
@@ -75,6 +79,7 @@ import Image from 'next/image'
                 </div>
                 <div className={styles.navRight}>
                 <div className={styles.cartSection}>
+                    <span className={styles.itemcount}>{itemcount}</span>
                     <Image
                     className={styles.test}
                     src="/images/icon-cart.svg"

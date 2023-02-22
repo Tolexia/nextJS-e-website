@@ -64,7 +64,7 @@ function Product({item}){
                             <span className={styles.priceValue}>$ {item.price}</span>
                             {item.discount != undefined && parseInt(item.discount) > 0 ? <span className={styles.discount} >{item.discount}%</span> : null}
                     </div>
-                        {item.discount != undefined && parseInt(item.discount) > 0 ?  <span className={styles.initial}>$ {item.price*(item.discount/100)}</span> : null}
+                        {item.discount != undefined && parseInt(item.discount) > 0 ?  <span className={styles.initial}>$ {parseFloat(item.price)/(parseInt(item.discount)/100)}</span> : null}
                    </div>
                    <div className={styles.handlecart}>
                         <div className={styles.handleitem}>
