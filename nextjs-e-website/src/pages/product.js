@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 import {query, onValue, getDatabase, ref, get, set, push, child, onChildAdded, onChildChanged, onChildRemoved,orderByKey, orderByChild,orderByValue, equalTo  } from "firebase/database"
 
 function Product({item}){
-    console.log(item);
     const refreshCart = useRef();
     const [count, setCount] = useState(0);
     function addItemToCart(count, item)
@@ -68,7 +67,7 @@ function Product({item}){
                    </div>
                    <div className={styles.handlecart}>
                         <div className={styles.handleitem}>
-                            <button type='button' onClick={() => setCount( count > 1 ? count + -1 : 0)} className={styles.less}>-</button>
+                            <button type='button' onClick={() => setCount( count > 1 ? count -1 : 0)} className={styles.less}>-</button>
                             <input type='text' className={styles.itemNb} defaultValue = {count}/>
                             <button type='button' onClick={() => setCount(count + 1)} className={styles.more}>+</button>
                         </div>

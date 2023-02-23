@@ -1,5 +1,5 @@
 .mainwrapper {
-    margin-top: 6em;
+    margin-top: 3em;
 }
 
 .itemDescription {
@@ -111,4 +111,18 @@
     left: 13px;
     top: -7px;
     font-weight: bold;
+}
+
+.checkout {
+    cursor: pointer;
+    width: 60%;
+    background-color: hsl(26, 100%, 55%);
+    color: white;
+    display: flex;
+    justify-content: center;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    margin: auto;
 }
