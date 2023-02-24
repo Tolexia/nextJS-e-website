@@ -35,7 +35,7 @@ import Image from 'next/image'
                 let shoe = 
                 <div id={i}  key={i} value = {i} className = {styles.cartItem}>
                     <img
-                        src= {item.img}
+                        src= {item.filename}
                         alt={item.name}
                         width={40}
                         height={40}

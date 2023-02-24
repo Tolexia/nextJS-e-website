@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 import {query, onValue, getDatabase, ref, get, set, push, child, onChildAdded, onChildChanged, onChildRemoved,orderByKey, orderByChild,orderByValue, equalTo  } from "firebase/database"
 
 function Product({item}){
-    console.log(item);
     const refreshCart = useRef();
     const [count, setCount] = useState(0);
     function addItemToCart(count, item)
