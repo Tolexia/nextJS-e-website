@@ -67,7 +67,7 @@ function Product({item}){
                    </div>
                    <div className={styles.handlecart}>
                         <div className={styles.handleitem}>
-                            <button type='button' onClick={() => setCount( count > 1 ? count + -1 : 0)} className={styles.less}>-</button>
+                            <button type='button' onClick={() => setCount( count > 1 ? count -1 : 0)} className={styles.less}>-</button>
                             <input type='text' className={styles.itemNb} defaultValue = {count}/>
                             <button type='button' onClick={() => setCount(count + 1)} className={styles.more}>+</button>
                         </div>

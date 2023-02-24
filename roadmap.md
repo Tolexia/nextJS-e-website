@@ -12,16 +12,17 @@
     - Displaying current cart content at page load
     - Refreshing cart on item addition + displaying content
     - Removing item onClick (with confirm)
-
+    - Displaying item count on cart icon
+- Adding file upload in add form to connect product data and image
+- Product page : change product depending on route
 
 # In progress
 - Creation of home page Desktop + Mobile
 - Creation of product page Desktop + Mobile
-- Handling cart
-    - Displaying item count on cart icon
+    
 
 # To do
-- Adding file upload in add form to connect product data and image
-- Adding auth
-- Product page : change show product depending on route
+
+- Adding auth + client page
+- Checkout page
 - Thumbnails and Lightbox on product page
