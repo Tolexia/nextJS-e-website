@@ -33,6 +33,10 @@ import Link from 'next/link'
             let newItemCount = 0;
             cartItems.forEach((item) => {
                 newItemCount += item.nb;
+                if(!item.filename.match('images'))
+                {
+                    item.filename = "/images/"+item.name+"/"+item.filename
+                }
                 let shoe = 
                 <div id={i}  key={i} value = {i} className = {styles.cartItem}>
                     <img
@@ -53,7 +57,7 @@ import Link from 'next/link'
             setCart(
             <div>
                 {order}
-                <Link className={styles.checkout}>checkout</Link>
+                <Link href = "/checkout" className={styles.checkout}>checkout</Link>
             </div>)
             setitemcount(newItemCount)
         }
