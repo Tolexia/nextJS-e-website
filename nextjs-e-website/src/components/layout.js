@@ -121,4 +121,5 @@ import Link from 'next/link'
     )
     
 })
+Layout.displayName = 'Layout';
 export default Layout;

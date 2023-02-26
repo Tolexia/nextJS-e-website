@@ -62,11 +62,11 @@ export default function Shoeslist()
         snapshot.forEach((childSnapshot) => {
             const childData = childSnapshot.val();
             let url = "/product?id="+ encodeURIComponent(childData.name) ;
-            item.filename = "/images/"+item.name+"/"+item.filename;
+            childData.filename = "/images/"+childData.name+"/"+childData.filename;
             let shoe = <div id={i}  key={i} value = {i}>
                 <Link href = {url}  className= {styles.shoelistItem}>
                 <Image
-                    src= {item.filename}
+                    src= {childData.filename}
                     alt="cart"
                     width={100}
                     height={100}

@@ -31,7 +31,7 @@ function Product({item}){
             refreshCart.current.setactive("active");
         }
     }
-
+   
     return (
     <>
         <Head>
@@ -103,8 +103,6 @@ Product.getInitialProps = async (context) => {
         return {
             item:item
         }
-       
-        
     })
 }
 
