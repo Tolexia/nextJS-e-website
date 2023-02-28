@@ -9,7 +9,7 @@ import React, { useState, useRef,useEffect } from 'react';
 
 export default function Shoeslist()
 {
-    const [image, setImage] = useState(null);
+    const [images, setImages] = useState([]);
     const [createObjectURL, setCreateObjectURL] = useState(null);
     const [shoeslist, setShoeslist] = useState(<div id = "shoelist" ></div>);
     function getNewRef(e)
@@ -35,17 +35,23 @@ export default function Shoeslist()
         uploadToServer()
     }
     const uploadToClient = (event) => {
-      if (event.target.files && event.target.files[0]) {
-        const i = event.target.files[0];
-        console.log(i);
-        setImage(i);
-        setCreateObjectURL(URL.createObjectURL(i));
+      if (event.target.files) {
+        let n = 0;
+        const object = []
+        for(let i of event.target.files)
+        {
+          console.log(i);
+          setImages(images.push(i.name));
+          object.push(<img key = {n} width={150} height={150} src={URL.createObjectURL(i)} />)
+          n++;
+        }
+        setCreateObjectURL(object);
       }
     };
 
     const uploadToServer = async (event) => {
       const body = new FormData();
-      body.append("file", image);
+      body.append("files", images);
       const response = await fetch("/api/file", {
         method: "POST",
         body
@@ -62,7 +68,7 @@ export default function Shoeslist()
         snapshot.forEach((childSnapshot) => {
             const childData = childSnapshot.val();
             let url = "/product?id="+ encodeURIComponent(childData.name) ;
-            childData.filename = "/images/"+childData.name+"/"+childData.filename;
+            childData.filename = "/images/"+childData.filename;
             let shoe = <div id={i}  key={i} value = {i}>
                 <Link href = {url}  className= {styles.shoelistItem}>
                 <Image
@@ -99,18 +105,11 @@ export default function Shoeslist()
             <input type="text" id = "price" placeholder='Price' />
             <input type="text" id = "discount" placeholder='discount' />
             <input type="text" id = "brand" placeholder='brand' />
-            <textarea id = "description"></textarea>
+            <textarea id = "description" placeholder="description"></textarea>
             <div className= {styles.fileupload}>
-              <img src={createObjectURL} />
-              <h4>Select Image</h4>
-              <input type="file" name="myImage" onChange={uploadToClient} />
-              {/* <button
-                className="btn btn-primary"
-                type="submit"
-                onClick={uploadToServer}
-                >
-                Send to server
-              </button> */}
+              {createObjectURL}
+              <h4>Add Images</h4>
+              <input type="file" multiple name="myImage" onChange={uploadToClient} />
             </div>
             <button className= {styles.save} onClick={e => insertNewShoes(e, db)}>Save</button>
         </div>

@@ -54,11 +54,18 @@ import Link from 'next/link'
                 order.push(shoe)
                 i++;
             });
+            if(order.length > 0 )
+            {
             setCart(
             <div>
                 {order}
                 <Link href = "/checkout" className={styles.checkout}>checkout</Link>
             </div>)
+            }
+            else
+            {
+                setCart(<p>Your cart is empty.</p>);
+            }
             setitemcount(newItemCount)
         }
     }

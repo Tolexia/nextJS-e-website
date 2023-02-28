@@ -10,15 +10,17 @@ export const config = {
 const post = async (req, res) => {
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
-      await saveFile(files.file);
+      await saveFiles(files.files);
     return res.status(201).send("");
   });
 };
 
-const saveFile = async (file) => {
-  const data = fs.readFileSync(file.filepath);
-  fs.writeFileSync(`./public/images/${file.originalFilename}`, data);
-  await fs.unlinkSync(file.filepath);
+const saveFiles = async (files) => {
+  files.forEach(file => {
+    const data = fs.readFileSync(file.filepath);
+    fs.writeFileSync(`./public/images/${file.originalFilename}`, data);
+    fs.unlinkSync(file.filepath);
+  })
   return;
 };
 

@@ -98,7 +98,7 @@ Product.getInitialProps = async (context) => {
         item =Object.entries(snapshot.val())[0][1];
         if(!item.filename.match('images'))
         {
-            item.filename = "/images/"+item.name+"/"+item.filename
+            item.filename = "/images/"+item.filename
         }
         return {
             item:item
