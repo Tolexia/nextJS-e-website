@@ -11,6 +11,21 @@ import {query, onValue, getDatabase, ref, get, set, push, child, onChildAdded, o
 function Product({item}){
     const refreshCart = useRef();
     const [count, setCount] = useState(0);
+    const files = JSON.parse(item.filename);
+    let mainPic = files[0];
+    mainPic = "/images/"+mainPic;
+    const thumbnails = [];
+    files.forEach(img => {
+        let src = "/images/"+img
+        thumbnails.push(<Image
+            src= {src}
+            alt="cart"
+            width={100}
+            height={100}
+            priority
+        />)
+        
+    });
     function addItemToCart(count, item)
     {
         item.nb = count;
@@ -45,12 +60,15 @@ function Product({item}){
                 <section className={styles.gallery}>
                 <Image
                     className={styles.mainPicture}
-                    src= {item.filename}
+                    src= {mainPic}
                     alt="cart"
                     width={500}
                     height={500}
                     priority
                 />
+                <div className={styles.thumbnails}>
+                    {thumbnails}
+                </div>
                 </section>
                 <section className={styles.infos}>
                    <h5 className={styles.brand}>{item.brand}</h5>
@@ -96,10 +114,7 @@ Product.getInitialProps = async (context) => {
     return get(query(ref(db, 'shoes'), orderByChild('name'), equalTo(productName)))
     .then(snapshot => {
         item =Object.entries(snapshot.val())[0][1];
-        if(!item.filename.match('images'))
-        {
-            item.filename = "/images/"+item.filename
-        }
+        
         return {
             item:item
         }

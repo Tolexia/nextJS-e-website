@@ -20,13 +20,17 @@ export default function Shoeslist()
     function insertNewShoes(e, db) {
         let name = e.target.parentNode.querySelector("#name").value;
         let price = e.target.parentNode.querySelector("#price").value;
+        const filename = [];
+        images.forEach(image => {
+          filename.push(image.name)
+        })
         const postData =  {
             name: name,
             price: price,
             discount: discount,
             brand: brand,
             description: description,
-            filename: image.name
+            filename: JSON.stringify(filename)
         }
 
         const postListRef = ref(db, 'shoes');
@@ -41,7 +45,7 @@ export default function Shoeslist()
         for(let i of event.target.files)
         {
           console.log(i);
-          setImages(images.push(i.name));
+          setImages(images.push(i));
           object.push(<img key = {n} width={150} height={150} src={URL.createObjectURL(i)} />)
           n++;
         }
@@ -68,7 +72,9 @@ export default function Shoeslist()
         snapshot.forEach((childSnapshot) => {
             const childData = childSnapshot.val();
             let url = "/product?id="+ encodeURIComponent(childData.name) ;
-            childData.filename = "/images/"+childData.filename;
+            const files = JSON.parse(childData.filename);
+            const mainPic = files[0];
+            childData.filename = "/images/"+mainPic;
             let shoe = <div id={i}  key={i} value = {i}>
                 <Link href = {url}  className= {styles.shoelistItem}>
                 <Image
