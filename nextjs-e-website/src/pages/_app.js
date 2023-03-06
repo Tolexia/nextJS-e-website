@@ -19,6 +19,7 @@ export default function App({ Component, pageProps }) {
     appId: "1:218373834438:web:c98f0e1f0c63c32985f9c7",
     measurementId: "G-P35WYNB4PN"
   };
+  pageProps.firebaseConfig = firebaseConfig;
   let analytics;
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
