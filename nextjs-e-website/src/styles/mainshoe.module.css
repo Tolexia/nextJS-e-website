@@ -1,0 +1,39 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapper div {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.text {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+
+}
+
+.new {
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.link {
+    cursor: pointer;
+    width: 60%;
+    background-color: hsl(26, 100%, 55%);
+    color: white;
+    display: flex;
+    justify-content: center;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 14px;
+    box-shadow: 1px 12px 18px 3px rgba(255,237,224,1);
+    -webkit-box-shadow: 1px 12px 18px 3px rgba(255,237,224,1);
+    -moz-box-shadow: 1px 12px 18px 3px rgba(255,237,224,1);
+}
