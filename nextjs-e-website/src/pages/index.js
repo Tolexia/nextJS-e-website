@@ -5,21 +5,13 @@ import styles from '@/styles/Home.module.css'
 import Shoeslist from '@/components/shoeslist'
 import Link from 'next/link';
 import Layout from '@/components/layout'
-import Mainshoe from '@/components/mainshoe'
+import Content from '@/components/content'
 import { limitToFirst, orderByChild, ref, query, get, getDatabase } from 'firebase/database';
 import { initializeApp } from "firebase/app";
 
 const inter = Inter({ subsets: ['latin'] })
 
 function Home({items}) {
-  const main = items[0][1];
-  const others = [];
-  items.forEach(element => {
-    if(element[1] != main)
-    {
-      others.push(element[1]);
-    }
-  });
   return (
     <>
       <Head>
@@ -29,7 +21,7 @@ function Home({items}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Mainshoe shoe = {main} />
+        <Content items = {items} />
       </Layout>
     </>
   )
