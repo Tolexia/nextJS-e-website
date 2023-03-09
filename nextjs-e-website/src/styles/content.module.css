@@ -1,10 +1,14 @@
-.wrapper {
+.content section {
+    margin-bottom: 2em;
+}
+
+.mainshoe, .second {
     display: flex;
     justify-content: space-between;
     border-radius: 12px;
 }
 
-.wrapper div {
+.mainshoe div, .second div {
     width: 50%;
     margin: 0 auto;
 }
