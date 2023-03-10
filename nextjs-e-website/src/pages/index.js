@@ -5,13 +5,13 @@ import styles from '@/styles/Home.module.css'
 import Shoeslist from '@/components/shoeslist'
 import Link from 'next/link';
 import Layout from '@/components/layout'
+import Content from '@/components/content'
 import { limitToFirst, orderByChild, ref, query, get, getDatabase } from 'firebase/database';
 import { initializeApp } from "firebase/app";
 
 const inter = Inter({ subsets: ['latin'] })
 
 function Home({items}) {
-  console.log(items)
   return (
     <>
       <Head>
@@ -21,9 +21,7 @@ function Home({items}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div>
-
-        </div>
+        <Content items = {items} />
       </Layout>
     </>
   )
@@ -39,6 +37,16 @@ Home.getInitialProps = async (context) => {
     appId: "1:218373834438:web:c98f0e1f0c63c32985f9c7",
     measurementId: "G-P35WYNB4PN"
   };
+  // const firebaseConfig = {
+  //   apiKey: process.env.API_KEY,
+  //   authDomain: process.env.AUTH_DOMAIN,
+  //   databaseURL: process.env.DB_URL,
+  //   projectId: process.env.PROJECT_ID,
+  //   storageBucket: process.env.STORAGE_BUCKET,
+  //   messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  //   appId: process.env.APP_ID,
+  //   measurementId: process.env.MEASUREMENT_ID,
+  //   };
   const app = initializeApp(firebaseConfig);
   let item = {};
   const db = getDatabase(app);
