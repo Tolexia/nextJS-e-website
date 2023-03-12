@@ -2,46 +2,33 @@ import styles from '@/styles/content.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import React, {useState,useEffect} from 'react'
-import ColorThief from '../../node_modules/colorthief/dist/color-thief.mjs'
 
 function Content({items})
 {
     
-    function setBackground()
-    {
-        const section = document.getElementById('mainshoe');
-        const mainPic = section.querySelector('img');
-        const colorThief = new ColorThief();
-        const color = colorThief.getColor(mainPic);
-        section.style.backgroundColor = `RGB(${color[0]+5},${color[1]+5},${color[2]+5})`
-    }
-    useEffect(() => {
-        setBackground()
-    }, [])
-    const assets = [];
     const urls = [];
     const shoes = [];
+    const noBackgroundPics = [];
     items.forEach(item => {
         const shoe = item[1];
         shoes.push(shoe)
-        const files = JSON.parse(shoe.filename);
-        const mainPic = "/images/"+files[0];
+        const nobg = "/images/"+shoe.no_background_pic;
         const url = "/product?id="+ encodeURIComponent(shoe.name) ;
-        assets.push(mainPic)
+        noBackgroundPics.push(nobg)
         urls.push(url)
     })
     return(
         <div className={styles.content}>
-            <section id = "mainshoe" className={[styles.mainshoe, 'picwrapper'].join(' ')}>
+            <section id = "mainshoe" className={[styles.mainshoe, styles.productwrapper].join(' ')}>
                 <div className={styles.text}>
                     <span className={styles.new}>new product</span>
                     <h1>{shoes[0].name}</h1>
                     <p>{shoes[0].description}</p>
                     <Link href = {urls[0]}  className= {styles.link}>see product</Link>
                 </div>
-                <div>
+                <div className= {styles.picwrapper}>
                     <Image
-                        src= {assets[0]}
+                        src= {noBackgroundPics[0]}
                         alt="mainPic"
                         width={500}
                         height={500}
@@ -49,10 +36,10 @@ function Content({items})
                     />
                 </div>
             </section>
-            <section id = "second" className={[styles.second, 'picwrapper'].join(' ')}>
-                <div>
+            <section id = "second" className={[styles.second, styles.productwrapper].join(' ')}>
+                <div className= {styles.picwrapper}>
                     <Image
-                        src= {assets[1]}
+                        src= {noBackgroundPics[1]}
                         alt="mainPic"
                         width={500}
                         height={500}
@@ -60,10 +47,39 @@ function Content({items})
                     />
                 </div>
                 <div className={styles.text}>
-                    <span className={styles.new}>new product</span>
                     <h1>{shoes[1].name}</h1>
                     <p>{shoes[1].description}</p>
                     <Link href = {urls[1]}  className= {styles.link}>see product</Link>
+                </div>
+            </section>
+            <section id = "third" className={[styles.third, styles.productwrapper].join(' ')}>
+                <div className={styles.text}>
+                    <h1>{shoes[1].name}</h1>
+                    <Link href = {urls[1]}  className= {styles.link}>see product</Link>
+                </div>
+                <div className= {styles.picwrapper}>
+                    <Image
+                        src= {noBackgroundPics[2]}
+                        alt="mainPic"
+                        width={300}
+                        height={300}
+                        priority
+                    />
+                </div>
+            </section>
+            <section id = "fourth" className={[styles.fourth, styles.productwrapper].join(' ')}>
+                <div className= {styles.picwrapper}>
+                    <Image
+                        src= {noBackgroundPics[3]}
+                        alt="mainPic"
+                        width={300}
+                        height={300}
+                        priority
+                    />
+                </div>
+                <div className={styles.text}>
+                    <h1>{shoes[3].name}</h1>
+                    <Link href = {urls[3]}  className= {styles.link}>see product</Link>
                 </div>
             </section>
         </div>
