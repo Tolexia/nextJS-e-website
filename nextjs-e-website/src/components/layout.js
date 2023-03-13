@@ -76,19 +76,21 @@ import Link from 'next/link'
         <>
             <nav className={styles.nav}>
                 <div className={styles.navLeft}>
-                <Image
-                    className={styles.logo}
-                    src="/images/logo.svg"
-                    alt="sneakers logo"
-                    width={138}
-                    height={20}
-                    priority
-                />
-                <a>Collections</a>
-                <a>Men</a>
-                <a>Women</a>
-                <a>About</a>
-                <a>Contact</a>
+                    <Link href ="/">
+                        <Image
+                            className={styles.logo}
+                            src="/images/logo.svg"
+                            alt="sneakers logo"
+                            width={138}
+                            height={20}
+                            priority
+                        />
+                    </Link>
+                    <a>Collections</a>
+                    <a>Men</a>
+                    <a>Women</a>
+                    <a>About</a>
+                    <a>Contact</a>
                 </div>
                 <div className={styles.navRight}>
                 <div className={styles.cartSection}>

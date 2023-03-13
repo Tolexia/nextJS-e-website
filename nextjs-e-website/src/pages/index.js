@@ -5,6 +5,7 @@ import styles from '@/styles/Home.module.css'
 import Shoeslist from '@/components/shoeslist'
 import Link from 'next/link';
 import Layout from '@/components/layout'
+import Footer from '@/components/footer'
 import Content from '@/components/content'
 import { limitToFirst, orderByChild, ref, query, get, getDatabase } from 'firebase/database';
 import { initializeApp } from "firebase/app";
@@ -23,6 +24,7 @@ function Home({items}) {
       <Layout>
         <Content items = {items} />
       </Layout>
+      <Footer />
     </>
   )
 }
