@@ -5,6 +5,8 @@
     display: flex;
     justify-content: space-between;
     border-radius: 12px;
+    flex-wrap: wrap;
+    position: relative;
 }
 
 .picwrapper {
@@ -51,6 +53,7 @@
 
 .productwrapper  div {
     width: 50%;
+    min-width: 300px;
     margin: 0 auto;
 }
 .productwrapper.fourth  div 
@@ -89,4 +92,14 @@
     /* box-shadow: 1px 12px 18px 3px rgba(255,237,224,1);
     -webkit-box-shadow: 1px 12px 18px 3px rgba(255,237,224,1);
     -moz-box-shadow: 1px 12px 18px 3px rgba(255,237,224,1); */
+}
+
+@media screen and (max-width:768px) 
+{
+    /* .text { */
+        /* position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 2; */
+    /* } */
 }

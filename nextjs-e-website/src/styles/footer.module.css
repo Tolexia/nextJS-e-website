@@ -1,7 +1,22 @@
 .footer {
     display: flex;
+    color: white;
+    background-color: black;
+    margin-top: 5em;
 }
 
 .footer > div {
     width: 50%;
+    padding:2em;
+}
+.links {
+    text-align: right;
+}
+.links a {
+    margin-left:1em;
+}
+.footer p, .footer span {
+    color: #acacac;
+    font-size: 14px;
+    margin-top: 1em;
 }
