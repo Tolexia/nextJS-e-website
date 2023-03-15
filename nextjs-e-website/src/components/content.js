@@ -54,8 +54,8 @@ function Content({items})
             </section>
             <section id = "third" className={[styles.third, styles.productwrapper].join(' ')}>
                 <div className={styles.text}>
-                    <h1>{shoes[1].name}</h1>
-                    <Link href = {urls[1]}  className= {styles.link}>see product</Link>
+                    <h1>{shoes[2].name}</h1>
+                    <Link href = {urls[2]}  className= {styles.link}>see product</Link>
                 </div>
                 <div className= {styles.picwrapper}>
                     <Image

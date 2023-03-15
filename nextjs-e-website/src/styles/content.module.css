@@ -96,6 +96,18 @@
 
 @media screen and (max-width:768px) 
 {
+    .content section.productwrapper {
+        height: 100vh;
+    }
+
+    .content section.productwrapper  div {
+        width: 100%;
+    }
+
+    .productwrapper img {
+        max-width: 80vw;
+        height: auto;
+    }
     /* .text { */
         /* position: absolute;
         height: 100%;
