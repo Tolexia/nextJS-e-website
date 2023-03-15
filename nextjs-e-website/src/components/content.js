@@ -21,9 +21,11 @@ function Content({items})
         <div className={styles.content}>
             <section id = "mainshoe" className={[styles.mainshoe, styles.productwrapper].join(' ')}>
                 <div className={styles.text}>
-                    <span className={styles.new}>new product</span>
-                    <h1>{shoes[0].name}</h1>
-                    <p>{shoes[0].description}</p>
+                    <div>
+                        <span className={styles.new}>new product</span>
+                        <h1>{shoes[0].name}</h1>
+                        <p>{shoes[0].description}</p>
+                    </div>
                     <Link href = {urls[0]}  className= {styles.link}>see product</Link>
                 </div>
                 <div className= {styles.picwrapper}>
@@ -47,14 +49,18 @@ function Content({items})
                     />
                 </div>
                 <div className={styles.text}>
-                    <h1>{shoes[1].name}</h1>
-                    <p>{shoes[1].description}</p>
+                    <div>
+                        <h1>{shoes[1].name}</h1>
+                        <p>{shoes[1].description}</p>
+                    </div>
                     <Link href = {urls[1]}  className= {styles.link}>see product</Link>
                 </div>
             </section>
             <section id = "third" className={[styles.third, styles.productwrapper].join(' ')}>
                 <div className={styles.text}>
-                    <h1>{shoes[2].name}</h1>
+                    <div>
+                        <h1>{shoes[2].name}</h1>
+                    </div>
                     <Link href = {urls[2]}  className= {styles.link}>see product</Link>
                 </div>
                 <div className= {styles.picwrapper}>
@@ -78,7 +84,9 @@ function Content({items})
                     />
                 </div>
                 <div className={styles.text}>
-                    <h1>{shoes[3].name}</h1>
+                    <div>
+                        <h1>{shoes[3].name}</h1>
+                    </div>
                     <Link href = {urls[3]}  className= {styles.link}>see product</Link>
                 </div>
             </section>

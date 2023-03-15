@@ -20,3 +20,15 @@
     font-size: 14px;
     margin-top: 1em;
 }
+@media screen and (max-width:768px) 
+{
+    .footer {
+        flex-direction: column-reverse;
+        width: 100vw;
+        position: absolute;
+        left: 0;
+    }
+    .footer > div {
+        width: 100%;
+    }
+}

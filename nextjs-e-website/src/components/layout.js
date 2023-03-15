@@ -75,17 +75,17 @@ import Link from 'next/link'
     return (
         <>
             <nav className={styles.nav}>
+                <Link href ="/">
+                    <Image
+                        className={styles.logo}
+                        src="/images/logo.svg"
+                        alt="sneakers logo"
+                        width={138}
+                        height={25}
+                        priority
+                    />
+                </Link>
                 <div className={styles.navLeft}>
-                    <Link href ="/">
-                        <Image
-                            className={styles.logo}
-                            src="/images/logo.svg"
-                            alt="sneakers logo"
-                            width={138}
-                            height={20}
-                            priority
-                        />
-                    </Link>
                     <a>Collections</a>
                     <a>Men</a>
                     <a>Women</a>

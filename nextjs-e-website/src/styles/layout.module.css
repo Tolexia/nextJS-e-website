@@ -126,3 +126,32 @@
     font-weight: bold;
     margin: auto;
 }
+
+@media screen and (max-width:1000px) 
+{
+    .avatar {
+        display: none;
+    }
+    .test {
+        width: 30px;
+        height: 30px;
+    }
+    .itemcount {
+        padding:3px 6px;
+        font-size: 15px;
+        left: 20px;
+        top: -11px;;
+    }
+    .nav {
+        width: 95%;
+    }
+    .navLeft {
+        display: none;
+        flex-direction: column;
+        height: 100vh;
+        width: 100vw;
+        position: sticky;
+        top: 0;
+        left: 0;
+    }
+}
