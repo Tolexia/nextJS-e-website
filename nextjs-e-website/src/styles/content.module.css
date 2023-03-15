@@ -107,6 +107,15 @@
     .productwrapper img {
         max-width: 80vw;
         height: auto;
+        object-fit: contain;
+    }
+
+    .link 
+    {
+        position: absolute;
+        top: 90%;
+        left: 50%;
+        transform: translateX(-50%);
     }
     /* .text { */
         /* position: absolute;
