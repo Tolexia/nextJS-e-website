@@ -85,6 +85,13 @@ import Link from 'next/link'
                         priority
                     />
                 </Link>
+                <div className={styles.burger}>
+                    <input type="checkbox" />
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <ul></ul>
+                </div>
                 <div className={styles.navLeft}>
                     <a>Collections</a>
                     <a>Men</a>
@@ -93,32 +100,32 @@ import Link from 'next/link'
                     <a>Contact</a>
                 </div>
                 <div className={styles.navRight}>
-                <div className={styles.cartSection}>
-                    <span className={styles.itemcount}>{itemcount}</span>
+                    <div className={styles.cartSection}>
+                        <span className={styles.itemcount}>{itemcount}</span>
+                        <Image
+                            className={styles.test}
+                            src="/images/icon-cart.svg"
+                            alt="cart"
+                            width={21}
+                            height={21}
+                            priority
+                            onClick={() => setactive(active == styles.noactive ? styles.active : styles.noactive)}
+                        /> 
+                        <div className={[styles.cartDisplay, active].join(' ')} id = "cart">
+                            <span className={styles.cartDisplayTitle}>Cart</span>
+                            <div>
+                                {cart}
+                            </div>
+                        </div>
+                    </div>
                     <Image
-                    className={styles.test}
-                    src="/images/icon-cart.svg"
-                    alt="cart"
-                    width={21}
-                    height={21}
-                    priority
-                    onClick={() => setactive(active == styles.noactive ? styles.active : styles.noactive)}
-                    /> 
-                    <div className={[styles.cartDisplay, active].join(' ')} id = "cart">
-                    <span className={styles.cartDisplayTitle}>Cart</span>
-                    <div>
-                        {cart}
-                    </div>
-                    </div>
-                </div>
-                <Image
-                    className={styles.avatar}
-                    src="/images/tolexia.jpg"
-                    alt="Next.js Logo"
-                    width={45}
-                    height={45}
-                    priority
-                />
+                        className={styles.avatar}
+                        src="/images/tolexia.jpg"
+                        alt="Next.js Logo"
+                        width={45}
+                        height={45}
+                        priority
+                    />
                 </div>
             </nav>
             <main className= {styles.mainwrapper}>
