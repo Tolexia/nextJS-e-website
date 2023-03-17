@@ -7,6 +7,7 @@ import Link from 'next/link'
  const Layout = forwardRef(({children}, ref) => 
 {
     let [active, setactive] = useState(styles.noactive);
+    let [activeMenu, setactiveMenu] = useState(null);
     let [itemcount, setitemcount] = useState(0);
     const [cart, setCart] = useState(<p>Your cart is empty.</p>)
     useImperativeHandle(
@@ -75,7 +76,7 @@ import Link from 'next/link'
     return (
         <>
             <nav className={styles.nav}>
-                <Link href ="/">
+                <Link className={styles.logolink} href ="/">
                     <Image
                         className={styles.logo}
                         src="/images/logo.svg"
@@ -86,13 +87,13 @@ import Link from 'next/link'
                     />
                 </Link>
                 <div className={styles.burger}>
-                    <input type="checkbox" />
+                    <input type="checkbox" onChange={e => setactiveMenu(activeMenu == null ? styles.active : null)}/>
                     <span></span>
                     <span></span>
                     <span></span>
                     <ul></ul>
                 </div>
-                <div className={styles.navLeft}>
+                <div className={[styles.navLeft, activeMenu].join(' ')}>
                     <a>Collections</a>
                     <a>Men</a>
                     <a>Women</a>

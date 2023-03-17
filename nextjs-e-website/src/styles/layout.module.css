@@ -21,7 +21,10 @@
 .removal {
     cursor: pointer;
 }
-
+.logolink {
+    display: flex;
+    align-items: center;
+}
 /* Navbar */
 .nav {
     display: flex;
@@ -62,6 +65,7 @@
 
 .cartSection img {
     cursor: pointer;
+    object-fit: contain;
 }
 
 .cartDisplay {
@@ -131,7 +135,7 @@
 .burger {
     display: none;
     position: absolute;
-    top: 40px;
+    top: 37px;
     left: 40px;
     z-index: 1;
     -webkit-user-select: none;
@@ -223,14 +227,17 @@
     .nav {
         width: 100%;
     }
-    .navLeft:not(.active) {
-        display: none;
+    .navLeft {
         flex-direction: column;
-        height: 100vh;
+        height: 80vh;
+        padding-top: 5em;
         width: 100vw;
         position: sticky;
         top: 0;
         left: 0;
+    }
+    .navLeft:not(.active) {
+        display: none;
     }
     .navLeft.active {
         display:flex;
@@ -239,7 +246,15 @@
         display: block;
     }
 
-    .navRight, .nav > a {
-        display: none;
+    .navRight, .logolink {
+        position:absolute;
+    }
+    .navRight {
+        left:78%;
+    }
+
+    .logolink {
+        left:50%;
+        transform: translateX(-50%);
     }
 }
