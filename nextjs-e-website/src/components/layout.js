@@ -34,9 +34,11 @@ import Link from 'next/link'
             let newItemCount = 0;
             cartItems.forEach((item) => {
                 newItemCount += item.nb;
-                if(!item.filename.match('images'))
+                let files = JSON.parse(item.filename);
+                let mainPic = files[0];
+                if(!mainPic.match('images'))
                 {
-                    item.filename = "/images/"+item.name+"/"+item.filename
+                    item.filename = "/images/"+mainPic
                 }
                 let shoe = 
                 <div id={i}  key={i} value = {i} className = {styles.cartItem}>
@@ -72,6 +74,9 @@ import Link from 'next/link'
     }
     useEffect(() => {
         cartInit()
+        document.querySelector('main').addEventListener('click', e => {
+            setactive(styles.noactive)
+        })
     }, [])
     return (
         <>
@@ -100,7 +105,7 @@ import Link from 'next/link'
                     <a>About</a>
                     <a>Contact</a>
                 </div>
-                <div className={styles.navRight}>
+                <div className={[styles.navRight, activeMenu].join(' ')}>
                     <div className={styles.cartSection}>
                         <span className={styles.itemcount}>{itemcount}</span>
                         <Image

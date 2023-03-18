@@ -58,13 +58,13 @@
 }
 .productwrapper .text > div
 {
-    height: 100%;
+    height: 70%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 100%;
 }
-.productwrapper.fourth  .text 
+.productwrapper.fourth > div
 {
     width: 45%;
     border-radius: 12px;

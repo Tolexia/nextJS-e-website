@@ -38,8 +38,11 @@
 .navLeft {
     width: 70%;
     display: flex;
-    justify-content:space-between;
     align-items: center;
+}
+
+.navLeft a {
+    margin-right: 2em;
 }
 
 .navRight {
@@ -48,7 +51,9 @@
     align-items: center;
     justify-content: flex-end;
 }
-
+.navRight.active {
+    display: none;
+}
 .brand {
     font-size: 25px;
     font-weight: bold;
@@ -70,10 +75,10 @@
 
 .cartDisplay {
     position: absolute;
-    width: 231px;
+    width: 250px;
     height: max-content;
     z-index: 2;
-    left: -150px;
+    right:0;
     background: #fff;
     box-shadow: 0 5px 21px 0px  hsl(220, 14%, 75%);
     padding: 10px 0;
@@ -93,8 +98,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: max-content;
     height: 58%;
+    padding: 1em 2em;
 }
 
 .cartDisplay p span{
@@ -228,6 +234,7 @@
         width: 100%;
     }
     .navLeft {
+        justify-content:space-between;
         flex-direction: column;
         height: 80vh;
         padding-top: 5em;
@@ -235,6 +242,9 @@
         position: sticky;
         top: 0;
         left: 0;
+    }
+    .navLeft a {
+        margin-right: 0;
     }
     .navLeft:not(.active) {
         display: none;

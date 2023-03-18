@@ -20,6 +20,9 @@
     font-size: 14px;
     margin-top: 1em;
 }
+footer.footer h6 {
+    font-size: 1.25em;
+}
 @media screen and (max-width:768px) 
 {
     .footer {
@@ -30,5 +33,9 @@
     }
     .footer > div {
         width: 100%;
+    }
+
+    .footer div:first-child {
+        padding-top: 0;
     }
 }

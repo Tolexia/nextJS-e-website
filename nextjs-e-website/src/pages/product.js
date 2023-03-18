@@ -10,14 +10,16 @@ import {query, onValue, getDatabase, ref, get, set, push, child, onChildAdded, o
 
 function Product({item}){
     const refreshCart = useRef();
-    const [count, setCount] = useState(0);
+    let [count, setCount] = useState(0);
     const files = JSON.parse(item.filename);
     let mainPic = files[0];
     mainPic = "/images/"+mainPic;
     const thumbnails = [];
+    let key = 0;
     files.forEach(img => {
         let src = "/images/"+img
         thumbnails.push(<Image
+            key = {key}
             src= {src}
             alt="cart"
             width={100}
@@ -86,8 +88,8 @@ function Product({item}){
                    <div className={styles.handlecart}>
                         <div className={styles.handleitem}>
                             <button type='button' onClick={() => setCount( count > 1 ? count -1 : 0)} className={styles.less}>-</button>
-                            <input type='text' className={styles.itemNb} defaultValue = {count}/>
-                            <button type='button' onClick={() => setCount(count + 1)} className={styles.more}>+</button>
+                            <input type='text' className={styles.itemNb}  value = {count} readOnly/>
+                            <button type='button' onClick={() => {setCount(count+1)}} className={styles.more}>+</button>
                         </div>
                         <button type='button' className={styles.add2cart} onClick = {() => addItemToCart(count, item)}>
                         <ReactSVG
