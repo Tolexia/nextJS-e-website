@@ -112,8 +112,8 @@ import Link from 'next/link'
                             className={styles.test}
                             src="/images/icon-cart.svg"
                             alt="cart"
-                            width={21}
-                            height={21}
+                            width={30}
+                            height={30}
                             priority
                             onClick={() => setactive(active == styles.noactive ? styles.active : styles.noactive)}
                         /> 

@@ -118,8 +118,8 @@
     padding: 2px 5px;
     font-size: 12px;
     color: white;
-    left: 13px;
-    top: -7px;
+    left: 22px;
+    top: -6px;
     font-weight: bold;
 }
 
@@ -131,10 +131,11 @@
     display: flex;
     justify-content: center;
     border: none;
-    padding: 15px;
+    padding: 10px;
     border-radius: 12px;
     font-weight: bold;
-    margin: auto;
+    margin: 1em auto 0;
+    font-size: 16px;
 }
 
 /* Burger Menu */
