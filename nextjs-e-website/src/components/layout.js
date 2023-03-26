@@ -42,7 +42,7 @@ import Link from 'next/link'
                 }
                 let shoe = 
                 <div id={i}  key={i} value = {i} className = {styles.cartItem}>
-                    <img
+                    <Image
                         src= {item.filename}
                         alt={item.name}
                         width={40}

@@ -7,7 +7,8 @@ import Link from 'next/link';
 import Layout from '@/components/layout'
 import Footer from '@/components/footer'
 import { limitToFirst, orderByChild, ref, query, get, getDatabase } from 'firebase/database';
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app"
+import Cart from "@/components/cart"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,7 +23,10 @@ function Checkout(pageProps) {
       </Head>
       <Layout>
         <main style={{display:'flex'}}>
-            
+            <section>
+
+            </section>
+            <Cart/>
         </main>
       </Layout>
       <Footer />

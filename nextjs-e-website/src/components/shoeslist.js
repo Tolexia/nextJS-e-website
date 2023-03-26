@@ -46,7 +46,7 @@ export default function Shoeslist()
         {
           console.log(i);
           setImages(images.push(i));
-          object.push(<img key = {n} width={150} height={150} src={URL.createObjectURL(i)} />)
+          object.push(<Image key = {n} width={150} height={150} src={URL.createObjectURL(i)} />)
           n++;
         }
         setCreateObjectURL(object);
