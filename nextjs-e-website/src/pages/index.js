@@ -8,7 +8,7 @@ import Layout from '@/components/layout'
 import Footer from '@/components/footer'
 import Content from '@/components/content'
 import { limitToFirst, orderByChild, ref, query, get, getDatabase } from 'firebase/database';
-import { firebase_app } from "@/components/config"
+import firebase_app from "@/components/config"
 
 const inter = Inter({ subsets: ['latin'] })
 

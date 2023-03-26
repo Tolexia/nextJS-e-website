@@ -21,7 +21,7 @@ function Checkout(pageProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <main>
+        <main style={{display:'flex'}}>
             
         </main>
       </Layout>
