@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import {query, onValue, getDatabase, ref, get, set, push, child, onChildAdded, onChildChanged, onChildRemoved,orderByKey, orderByChild,orderByValue, equalTo  } from "firebase/database"
 
 function Product({item}){
-    const refreshCart = useRef();
+    const refreshCart = useRef(); 
     let [count, setCount] = useState(0);
     const files = JSON.parse(item.filename);
     let mainPic = files[0];
