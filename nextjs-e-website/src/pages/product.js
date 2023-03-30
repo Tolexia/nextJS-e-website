@@ -7,7 +7,6 @@ import { ReactSVG } from "react-svg";
 import React, { useState, useRef,useEffect } from 'react';
 import { useRouter } from 'next/router'
 import {query, onValue, getDatabase, ref, get, set, push, child, onChildAdded, onChildChanged, onChildRemoved,orderByKey, orderByChild,orderByValue, equalTo  } from "firebase/database"
-import firebase_app from "@/components/config"
 
 function Product({item}){
     const refreshCart = useRef(); 
@@ -113,7 +112,7 @@ function Product({item}){
 Product.getInitialProps = async (context) => {
     let item = {};
     const productName = context.query.id;
-    const db = getDatabase(firebase_app);
+    const db = getDatabase();
     return get(query(ref(db, 'shoes'), orderByChild('name'), equalTo(productName)))
     .then(snapshot => {
         item =Object.entries(snapshot.val())[0][1];
