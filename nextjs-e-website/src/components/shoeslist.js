@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image'
 import styles from '@/styles/Shoeslist.module.css'
 import React, { useState, useRef,useEffect } from 'react';
+import firebase_app from "@/components/config"
 
 
 export default function Shoeslist()
@@ -60,7 +61,7 @@ export default function Shoeslist()
         body
       });
     };
-    const db = getDatabase();
+    const db = getDatabase(firebase_app);
     const dbRef = ref(db);
     const shoes = [];
     get(child(dbRef, `shoes`))
