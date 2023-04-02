@@ -1,26 +1,26 @@
-.shoelist, .fakeform, .fileupload {
+.productlist, .fakeform, .fileupload {
     display: flex;
     flex-direction: column;
 }
 
-.shoelist {
+.productlist {
     justify-content: space-around;
 }
-.shoelistItem {
+.productlistItem {
     border-bottom: 1px solid  #e5e3e3;
     padding: 1em;
 }
 
-.shoelistItem, .fileupload {
+.productlistItem, .fileupload {
     display: flex;
     align-items: center;
 }
 
-.shoelistItem img {
+.productlistItem img {
     margin-right: 1em;
 }
 
-.shoelistItem  span {
+.productlistItem  span {
     text-align: center;
     margin-top: 10px;
 }

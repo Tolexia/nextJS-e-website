@@ -2,22 +2,22 @@ import { getDatabase, ref, get, set, push, child, onChildAdded, onChildChanged, 
 import { createRoot } from 'react-dom/client';
 import Link from 'next/link';
 import Image from 'next/image'
-import styles from '@/styles/Shoeslist.module.css'
+import styles from '@/styles/Productslist.module.css'
 import React, { useState, useRef,useEffect } from 'react';
 import firebase_app from "@/components/config"
 
 
-export default function Shoeslist()
+export default function Productslist()
 {
     const [images, setImages] = useState([]);
     const [createObjectURL, setCreateObjectURL] = useState(null);
-    const [shoeslist, setShoeslist] = useState(<div id = "shoelist" ></div>);
+    const [productslist, setProductslist] = useState(<div id = "productlist" ></div>);
     function getNewRef(e)
     {
       const button = e.target;
       button.parentNode.querySelector('.fakeform').style.display = "flex";
     }
-    function insertNewShoes(e, db) {
+    function insertNewProducts(e, db) {
         let name = e.target.parentNode.querySelector("#name").value;
         let price = e.target.parentNode.querySelector("#price").value;
         const filename = [];
@@ -33,7 +33,7 @@ export default function Shoeslist()
             filename: JSON.stringify(filename)
         }
 
-        const postListRef = ref(db, 'shoes');
+        const postListRef = ref(db, 'products');
         const newPostRef = push(postListRef);
         set(newPostRef, postData);
         uploadToServer()
@@ -63,8 +63,8 @@ export default function Shoeslist()
     };
     const db = getDatabase(firebase_app);
     const dbRef = ref(db);
-    const shoes = [];
-    get(child(dbRef, `shoes`))
+    const products = [];
+    get(child(dbRef, `products`))
     .then((snapshot) => {
       if (snapshot.exists()) 
       {
@@ -75,8 +75,8 @@ export default function Shoeslist()
             const files = JSON.parse(childData.filename);
             const mainPic = files[0];
             childData.filename = "/images/"+mainPic;
-            let shoe = <div id={i}  key={i} value = {i}>
-                <Link href = {url}  className= {styles.shoelistItem}>
+            let product = <div id={i}  key={i} value = {i}>
+                <Link href = {url}  className= {styles.productlistItem}>
                 <Image
                     src= {childData.filename}
                     alt="cart"
@@ -87,12 +87,12 @@ export default function Shoeslist()
                   <span>{childData.name} : ${childData.price}</span>
                 </Link>
             </div>
-            shoes.push(shoe)
+            products.push(product)
             i++;
         });
-        setShoeslist(<div id = "shoelist" >
-          <ul  className= {styles.shoelist}>
-            {shoes}
+        setProductslist(<div id = "productlist" >
+          <ul  className= {styles.productlist}>
+            {products}
           </ul>
         </div>
         )
@@ -104,7 +104,7 @@ export default function Shoeslist()
     });
   return (
     <div>
-        {shoeslist}
+        {productslist}
         <button className= {styles.save} onClick={e => getNewRef(e, db)}>New</button>
         <div className={'fakeform '+styles.fakeform} style={{"display":"none"}}>
             <input type="text" id = "name" placeholder='Name'/>
@@ -117,7 +117,7 @@ export default function Shoeslist()
               <h4>Add Images</h4>
               <input type="file" multiple name="myImage" onChange={uploadToClient} />
             </div>
-            <button className= {styles.save} onClick={e => insertNewShoes(e, db)}>Save</button>
+            <button className= {styles.save} onClick={e => insertNewProducts(e, db)}>Save</button>
         </div>
     </div>
   )

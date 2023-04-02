@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import Shoeslist from '@/components/shoeslist'
+import Productslist from '@/components/productslist'
 import Link from 'next/link';
 import Layout from '@/components/layout'
 
@@ -18,7 +18,7 @@ function Add() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Shoeslist />
+        <Productslist />
       </Layout>
     </>
   )

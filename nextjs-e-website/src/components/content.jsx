@@ -7,24 +7,24 @@ function Content({items})
 {
     
     const urls = [];
-    const shoes = [];
+    const products = [];
     const noBackgroundPics = [];
     items.forEach(item => {
-        const shoe = item[1];
-        shoes.push(shoe)
-        const nobg = "/images/"+shoe.no_background_pic;
-        const url = "/product?id="+ encodeURIComponent(shoe.name) ;
+        const product = item[1];
+        products.push(product)
+        const nobg = "/images/"+product.no_background_pic;
+        const url = "/product?id="+ encodeURIComponent(product.name) ;
         noBackgroundPics.push(nobg)
         urls.push(url)
     })
     return(
         <div className={styles.content}>
-            <section id = "mainshoe" className={[styles.mainshoe, styles.productwrapper].join(' ')}>
+            <section id = "mainproduct" className={[styles.mainproduct, styles.productwrapper].join(' ')}>
                 <div className={styles.text}>
                     <div>
                         <span className={styles.new}>new product</span>
-                        <h1>{shoes[0].name}</h1>
-                        <p>{shoes[0].description}</p>
+                        <h1>{products[0].name}</h1>
+                        <p>{products[0].description}</p>
                     </div>
                     <Link href = {urls[0]}  className= {styles.link}>see product</Link>
                 </div>
@@ -50,8 +50,8 @@ function Content({items})
                 </div>
                 <div className={styles.text}>
                     <div>
-                        <h1>{shoes[1].name}</h1>
-                        <p>{shoes[1].description}</p>
+                        <h1>{products[1].name}</h1>
+                        <p>{products[1].description}</p>
                     </div>
                     <Link href = {urls[1]}  className= {styles.link}>see product</Link>
                 </div>
@@ -59,7 +59,7 @@ function Content({items})
             <section id = "third" className={[styles.third, styles.productwrapper].join(' ')}>
                 <div className={styles.text}>
                     <div>
-                        <h1>{shoes[2].name}</h1>
+                        <h1>{products[2].name}</h1>
                     </div>
                     <Link href = {urls[2]}  className= {styles.link}>see product</Link>
                 </div>
@@ -85,7 +85,7 @@ function Content({items})
                 </div>
                 <div className={styles.text}>
                     <div>
-                        <h1>{shoes[3].name}</h1>
+                        <h1>{products[3].name}</h1>
                     </div>
                     <Link href = {urls[3]}  className= {styles.link}>see product</Link>
                 </div>

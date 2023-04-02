@@ -40,7 +40,7 @@ import Link from 'next/link'
                 {
                     item.filename = "/images/"+mainPic
                 }
-                let shoe = 
+                let product = 
                 <div id={i}  key={i} value = {i} className = {styles.cartItem}>
                     <Image
                         src= {item.filename}
@@ -54,7 +54,7 @@ import Link from 'next/link'
                     </div>
                     <span className= {styles.removal} data-id = {i} onClick={e => confirm("Remove this item ?") ? removeItemFromCart(e.target.dataset.id) : ""}>X</span>
                 </div>
-                order.push(shoe)
+                order.push(product)
                 i++;
             });
             if(order.length > 0 )

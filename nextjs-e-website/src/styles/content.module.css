@@ -13,11 +13,11 @@
     display: flex;
     justify-content: center;
 }
-.mainshoe, .second {
+.mainproduct, .second {
     color: white;
 }
 
-.mainshoe, .fourth .picwrapper {
+.mainproduct, .fourth .picwrapper {
     background-color: black;
 }
 .second {
@@ -28,7 +28,7 @@
     color: black;
     background-color: #efecec;
 }
-.mainshoe img {
+.mainproduct img {
     filter: drop-shadow(0 0 8.75rem white);
 }
 .second img, .fourth img {
@@ -39,7 +39,7 @@
 }
 
 
-.mainshoe .link {
+.mainproduct .link {
     background-color: hsl(26, 100%, 55%);
 }
 
