@@ -1,0 +1,22 @@
+.cartSection {
+    border:1px solid #F1F1F1;
+    border-radius: 12px;
+    padding: 3em 2em;
+}
+
+.cartItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.cartItem img {
+    margin-right: 10px;
+}
+
+.itemDescription {
+    display: inline-flex;
+    flex-direction: column;
+    font-size: 14px;
+}
