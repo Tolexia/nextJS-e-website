@@ -29,8 +29,8 @@ export default function Cart()
                         height={60}
                     />
                     <div className = {styles.itemDescription}>
-                        <span className={itemname}>{item.name}</span>
-                        <span className={itemprice}>${item.price}</span>
+                        <span className={styles.itemname}>{item.name}</span>
+                        <span className={styles.itemprice}>${item.price}</span>
                     </div>
                     <span data-id = {i}>x{item.nb}</span>
                 </div>
