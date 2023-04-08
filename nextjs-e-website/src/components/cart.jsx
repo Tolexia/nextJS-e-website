@@ -1,19 +1,19 @@
 import {useState, useEffect } from "react"
 import styles from "@/styles/Cart.module.css";
-
+import Image from 'next/image'
 
 export default function Cart()
 {
     let [cart, setCart] = useState(<div></div>)
+    let [total, setTotal] = useState(0)
     useEffect(() => {
         if(localStorage.getItem('cart') != null)
         {
             let i = 0;
             const order = [];
             const cartItems = JSON.parse(localStorage.getItem('cart'));
-            let newItemCount = 0;
             cartItems.forEach((item) => {
-                newItemCount += item.nb;
+                setTotal(total + (parseFloat(item.price) * item.nb));
                 let files = JSON.parse(item.filename);
                 let mainPic = files[0];
                 if(!mainPic.match('images'))
@@ -22,17 +22,17 @@ export default function Cart()
                 }
                 let product = 
                 <div id={i}  key={i} value = {i} className = {styles.cartItem}>
-                    <new Image
+                    <Image
                         src= {item.filename}
                         alt={item.name}
-                        width={40}
-                        height={40}
+                        width={60}
+                        height={60}
                     />
                     <div className = {styles.itemDescription}>
-                        <span>{item.name}</span>
-                        <span>${item.price} x {item.nb} <b>${parseFloat(item.price) * item.nb}</b></span>
+                        <span className={itemname}>{item.name}</span>
+                        <span className={itemprice}>${item.price}</span>
                     </div>
-                    <span className= {styles.removal} data-id = {i} onClick={e => confirm("Remove this item ?") ? removeItemFromCart(e.target.dataset.id) : ""}>X</span>
+                    <span data-id = {i}>x{item.nb}</span>
                 </div>
                 order.push(product)
                 i++;
