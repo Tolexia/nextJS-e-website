@@ -1,11 +1,13 @@
 import {useState, useEffect } from "react"
 import styles from "@/styles/Cart.module.css";
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Cart()
 {
     let [cart, setCart] = useState(<div></div>)
     let [total, setTotal] = useState(0)
+    let shipping = 10;
     useEffect(() => {
         if(localStorage.getItem('cart') != null)
         {
@@ -40,7 +42,7 @@ export default function Cart()
             if(order.length > 0 )
             {
                 setCart(
-                <div>
+                <div className={styles.items}>
                     {order}
                 </div>)
             }
@@ -50,6 +52,23 @@ export default function Cart()
         <div className={styles.cartSection}>
             <h2>SUMMARY</h2>
             {cart}
+            <div className={styles.resumeItem}>
+                <span className={styles.resumeleft}>TOTAL</span>
+                <span className={styles.resumeright}>$ {total}</span>
+            </div>
+            <div className={styles.resumeItem}>
+                <span className={styles.resumeleft}>SHIPPING</span>
+                <span className={styles.resumeright}>$ {shipping}</span>
+            </div>
+            <div className={styles.resumeItem}>
+                <span className={styles.resumeleft}>VAT (INCLUDED)</span>
+                <span className={styles.resumeright}>$ {0.20*total}</span>
+            </div>
+            <div className={styles.resumeItem}>
+                <span className={styles.resumeleft}>GRAND TOTAL</span>
+                <span className={styles.resumeright}>$ {total+shipping}</span>
+            </div>
+            <Link className={styles.link} href = "">CONTINUE & PAY</Link>
         </div>
     )
 }
