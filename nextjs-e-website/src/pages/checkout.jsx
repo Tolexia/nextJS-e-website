@@ -32,7 +32,7 @@ function Checkout(pageProps) {
                     <label htmlFor="name">Name</label>
                     <input type="text" name="name" id="name" placeholder='John Doe' required/>
                   </div>
-                  <div>
+                  <div className={styles.adresswrapper}>
                     <label htmlFor="mail">Email Address</label>
                     <input type="mail" name="mail" id="mail" placeholder='john.doe@gmail.com' required/>
                   </div>
@@ -69,14 +69,18 @@ function Checkout(pageProps) {
                   <div style={{justifyContent:'flex-end'}}>
                     <label>Payment methods</label>
                   </div>
-                  <div>
+                  <div className={styles.radiocontainer}>
+                    <label className={styles.labelradio} htmlFor="emoney">
                     <input type="radio" name="paymentmethod" id="emoney" checked/>
-                    <label htmlFor="emoney">e-money</label>
+                      e-money
+                    </label>
                   </div>
                   <div></div>
-                  <div>
+                  <div className={styles.radiocontainer}>
+                    <label className={styles.labelradio} htmlFor="cash">
                     <input type="radio" name="paymentmethod" id="cash" />
-                    <label htmlFor="cash">Cash on delivery</label>
+						Cash on delivery
+					</label>
                   </div>
                   <div>
                     <label htmlFor="emoneynumber">e-Money Number</label>
@@ -92,7 +96,6 @@ function Checkout(pageProps) {
             <Cart/>
         </main>
       </Layout>
-      <Footer />
     </>
   )
 }

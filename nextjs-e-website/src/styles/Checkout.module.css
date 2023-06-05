@@ -26,7 +26,7 @@
     font-size: 18px;
     margin-bottom: 1.5em;
 }
-.form, .formdiv > div:not(:has(input[type=radio])) {
+.form, .formdiv > div:not(.radiocontainer) {
     flex-direction: column;
 }
 .formdiv {
@@ -37,21 +37,25 @@
     margin-bottom: 2em;
 }
 
-.formdiv > div:has(#address)
+.formdiv > .adresswrapper
 {
     grid-column: 1/3;
 }
 .formdiv label {
     font-size: 16px;
 }
-.formdiv input[type=text],.formdiv input[type=mail],.formdiv > div:has(input[type=radio])
+.formdiv input[type=text],.formdiv input[type=mail],.formdiv .labelradio
 {
     border-radius: 12px;
     padding: 1em 2em;
     border:1px solid #F1F1F1;
     margin-top: 10px;
+    cursor: pointer;
 }
-.formdiv > div:has(input[type=radio])
+.formdiv .labelradio {
+    width: 100%;
+}
+.formdiv .radiocontainer
 {
     align-items: stretch;
 }
@@ -61,8 +65,8 @@
     width: 18px;
     margin-right: 1em;
 }
-.formdiv > div:has(input[type=radio]:checked),
-.formdiv > div:has(input[type=radio]):hover,
+.formdiv .labelradio:checked,
+.formdiv .labelradio:hover,
 .formdiv input[type=text]:hover,
 .formdiv input[type=mail]:hover,
 .formdiv input[type=text]:focus,

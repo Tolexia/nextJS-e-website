@@ -3,6 +3,7 @@ import styles from "@/styles/layout.module.css";
 import React, {useState,useEffect, useImperativeHandle, forwardRef} from 'react';
 import Image from 'next/image'
 import Link from 'next/link'
+import Footer from '@/components/footer'
 
  const Layout = forwardRef(({children}, ref) => 
 {
@@ -139,6 +140,7 @@ import Link from 'next/link'
                     cart: cart
                 })}
             </main> 
+            <Footer />
         </>
     )
     

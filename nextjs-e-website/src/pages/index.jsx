@@ -5,7 +5,6 @@ import styles from '@/styles/Home.module.css'
 import Productslist from '@/components/productslist'
 import Link from 'next/link';
 import Layout from '@/components/layout'
-import Footer from '@/components/footer'
 import Content from '@/components/content'
 import { limitToFirst, orderByChild, ref, query, get, getDatabase } from 'firebase/database';
 import firebase_app from "@/components/config"
@@ -26,7 +25,6 @@ function Home(pageProps) {
       <Layout>
         <Content items = {items} />
       </Layout>
-      <Footer />
     </>
   )
 }

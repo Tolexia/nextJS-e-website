@@ -15,7 +15,10 @@ export default function Cart()
             const order = [];
             const cartItems = JSON.parse(localStorage.getItem('cart'));
             cartItems.forEach((item) => {
-                setTotal(total + (parseFloat(item.price) * item.nb));
+                const totalThisItem = parseFloat(item.price) * item.nb;
+                console.log(totalThisItem)
+                const VAT = 0.20 * totalThisItem;
+                setTotal(total + (totalThisItem+VAT));
                 let files = JSON.parse(item.filename);
                 let mainPic = files[0];
                 if(!mainPic.match('images'))
