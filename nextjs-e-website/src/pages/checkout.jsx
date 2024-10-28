@@ -2,17 +2,54 @@ import Head from 'next/head'
 
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Checkout.module.css'
-import Productslist from '@/components/productslist'
-import Link from 'next/link';
 import Layout from '@/components/layout'
-import Footer from '@/components/footer'
-import { limitToFirst, orderByChild, ref, query, get, getDatabase } from 'firebase/database';
-import { initializeApp } from "firebase/app"
 import Cart from "@/components/cart"
 
+import { useState } from 'react';
+import { getDatabase, ref, push } from "firebase/database";
+import firebase_app from "@/components/config";
+import { useRouter } from 'next/router';
+
+const db = getDatabase(firebase_app);
 const inter = Inter({ subsets: ['latin'] })
 
 function Checkout(pageProps) {
+    const [formData, setFormData] = useState({});
+    const router = useRouter();
+
+    const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        // Récupérer les articles du panier depuis le localStorage
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        // Créer l'objet de commande
+        const order = {
+          ...formData,
+          items: cartItems,
+          date: new Date().toISOString(),
+          status: 'en attente'
+        };
+    
+        try {
+          // Ajouter la commande à la base de données Firebase
+          const ordersRef = ref(db, 'orders');
+          await push(ordersRef, order);
+    
+          // Vider le panier
+          localStorage.removeItem('cart');
+    
+          // Rediriger vers une page de confirmation
+          router.push('/order-confirmation');
+        } catch (error) {
+          console.error("Erreur lors de la création de la commande:", error);
+          // Gérer l'erreur (par exemple, afficher un message à l'utilisateur)
+        }
+      };
   return (
     <>
       <Head>
@@ -23,75 +60,67 @@ function Checkout(pageProps) {
       </Head>
       <Layout>
         <main className={styles.mainSection}>
-            <form method='POST' action='/' className={styles.form}>
-              <h1>CHECKOUT</h1>
-              <div>
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <h1>CHECKOUT</h1>
+                <div>
                 <h3>BILLING DETAILS</h3>
                 <div className={styles.formdiv}>
-                  <div>
+                <div>
                     <label htmlFor="name">Name</label>
-                    <input type="text" name="name" id="name" placeholder='John Doe' required/>
-                  </div>
-                  <div className={styles.adresswrapper}>
-                    <label htmlFor="mail">Email Address</label>
-                    <input type="mail" name="mail" id="mail" placeholder='john.doe@gmail.com' required/>
-                  </div>
-                  <div>
-                    <label htmlFor="phone">Phone Number</label>
-                    <input type="text" name="phone" id="phone" placeholder='0612345678' required/>
-                  </div>
+                    <input type="text" name="name" id="name" onChange={handleInputChange} required />
                 </div>
-              </div>
-              <div>
+                <div>
+                    <label htmlFor="email">Email Address</label>
+                    <input type="email" name="email" id="email" onChange={handleInputChange} required />
+                </div>
+                <div>
+                    <label htmlFor="phone">Phone Number</label>
+                    <input type="tel" name="phone" id="phone" onChange={handleInputChange} required />
+                </div>
+                </div>
+            </div>
+            <div>
                 <h3>SHIPPING INFO</h3>
                 <div className={styles.formdiv}>
-                  <div style={{gridColumn:'1/3'}}>
+                <div>
                     <label htmlFor="address">Address</label>
-                    <input type="text" name="address" id="address" placeholder='101 Helloworld Street' required/>
-                  </div>
-                  <div>
-                    <label htmlFor="zip">ZIP Code</label>
-                    <input type="text" name="zip" id="zip" placeholder='10001' required/>
-                  </div>
-                  <div>
-                    <label htmlFor="city">City</label>
-                    <input type="text" name="city" id="city" placeholder='New York' required/>
-                  </div>
-                  <div>
-                    <label htmlFor="country">Country</label>
-                    <input type="text" name="country" id="country" placeholder='United States' required/>
-                  </div>
+                    <input type="text" name="address" id="address" onChange={handleInputChange} required />
                 </div>
-              </div>
-              <div>
+                <div>
+                    <label htmlFor="zipcode">ZIP Code</label>
+                    <input type="text" name="zipcode" id="zipcode" onChange={handleInputChange} required />
+                </div>
+                <div>
+                    <label htmlFor="city">City</label>
+                    <input type="text" name="city" id="city" onChange={handleInputChange} required />
+                </div>
+                <div>
+                    <label htmlFor="country">Country</label>
+                    <input type="text" name="country" id="country" onChange={handleInputChange} required />
+                </div>
+                </div>
+            </div>
+            <div>
                 <h3>PAYMENT DETAILS</h3>
                 <div className={styles.formdiv}>
-                  <div style={{justifyContent:'flex-end'}}>
-                    <label>Payment methods</label>
-                  </div>
-                  <div className={styles.radiocontainer}>
-                    <label className={styles.labelradio} htmlFor="emoney">
-                    <input type="radio" name="paymentmethod" id="emoney" checked/>
-                      e-money
-                    </label>
-                  </div>
-                  <div></div>
-                  <div className={styles.radiocontainer}>
-                    <label className={styles.labelradio} htmlFor="cash">
-                    <input type="radio" name="paymentmethod" id="cash" />
-						Cash on delivery
-					</label>
-                  </div>
-                  <div>
-                    <label htmlFor="emoneynumber">e-Money Number</label>
-                    <input type="text" name="emoneynumber" id="emoneynumber" placeholder='24304530' />
-                  </div>
-                  <div>
-                    <label htmlFor="emoneypin">e-Money PIN</label>
-                    <input type="text" name="emoneypin" id="emoneypin" placeholder='6891' />
-                  </div>
+                <div>
+                    <label htmlFor="paymentMethod">Payment Method</label>
+                    <select name="paymentMethod" id="paymentMethod" onChange={handleInputChange} required>
+                    <option value="e-Money">e-Money</option>
+                    <option value="Cash on Delivery">Cash on Delivery</option>
+                    </select>
                 </div>
-              </div>
+                <div>
+                    <label htmlFor="emoneynumber">e-Money Number</label>
+                    <input type="text" name="emoneynumber" id="emoneynumber" onChange={handleInputChange} placeholder='24304530' />
+                </div>
+                <div>
+                    <label htmlFor="emoneypin">e-Money PIN</label>
+                    <input type="text" name="emoneypin" id="emoneypin" onChange={handleInputChange} placeholder='6891' />
+                </div>
+                </div>
+            </div>
+            <button type="submit" className={styles.submitButton}>CONTINUE & PAY</button>
             </form>
             <Cart/>
         </main>

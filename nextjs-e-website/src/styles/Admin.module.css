@@ -1,0 +1,62 @@
+.adminContainer {
+    padding: 2rem;
+  }
+  
+  .adminContainer h1 {
+    margin-bottom: 1rem;
+  }
+  
+  .adminContainer form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .adminContainer input,
+  .adminContainer textarea {
+    padding: 0.5rem;
+  }
+  
+  .adminContainer button {
+    padding: 0.5rem 1rem;
+    background-color: hsl(26, 100%, 55%);
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .adminContainer ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .adminContainer li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .ordersSection {
+    margin-top: 2rem;
+  }
+
+  .adminNav {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .adminLink {
+    padding: 0.5rem 1rem;
+    background-color: hsl(26, 100%, 55%);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  
+  .adminLink:hover {
+    background-color: hsl(26, 100%, 45%);
+  }
