@@ -6,7 +6,7 @@ const OrderConfirmation = () => {
         <div>
             <h1>Commande confirmée</h1>
             <p>Merci pour votre commande !</p>
-            <Link href="/">Retour à l'accueil</Link>
+            <Link href="/">Retour à l&apos;accueil</Link>
         </div>
         </Layout>
     );

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import Layout from '@/components/layout';
 import styles from '@/styles/Admin.module.css';
-import withAuth from '@/components/withAuth';
+import WithAuth from '@/components/withAuth';
 import { logOut } from '@/components/auth';
 import Link from 'next/link';
 
@@ -35,4 +35,4 @@ const Admin = () => {
   );
 };
 
-export default withAuth(Admin);
+export default WithAuth(Admin);

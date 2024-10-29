@@ -7,7 +7,7 @@ import { getDatabase, ref, get, set } from "firebase/database";
 import Layout from '@/components/layout';
 import styles from '@/styles/Admin.module.css';
 import firebase_app from "@/components/config";
-import withAuth from '@/components/withAuth';
+import WithAuth from '@/components/withAuth';
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -60,4 +60,4 @@ const AdminOrders = () => {
   );
 };
 
-export default withAuth(AdminOrders);
+export default WithAuth(AdminOrders);

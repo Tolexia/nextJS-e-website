@@ -3,7 +3,7 @@ import { getDatabase, ref, get, push, remove } from "firebase/database";
 import Layout from '@/components/layout';
 import styles from '@/styles/Admin.module.css';
 import firebase_app from "@/components/config";
-import withAuth from '@/components/withAuth';
+import WithAuth from '@/components/withAuth';
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -65,4 +65,4 @@ const AdminProducts = () => {
   );
 };
 
-export default withAuth(AdminProducts);
+export default WithAuth(AdminProducts);
