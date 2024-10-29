@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { getCurrentUser } from './auth';
 
-const WithAuth = (WrappedComponent) => {
-  return (props) => {
+const withAuth = (WrappedComponent) => {
+  const WithAuthComponent = (props) => {
     const router = useRouter();
 
     useEffect(() => {
@@ -11,10 +11,20 @@ const WithAuth = (WrappedComponent) => {
       if (!user) {
         router.replace('/login');
       }
-    }, []);
+    }, [router]);
 
     return <WrappedComponent {...props} />;
   };
+
+  // Ajout du displayName pour résoudre l'erreur react/display-name
+  WithAuthComponent.displayName = `WithAuth(${getDisplayName(WrappedComponent)})`;
+  
+  return WithAuthComponent;
 };
 
-export default WithAuth;
+// Fonction utilitaire pour obtenir le nom d'affichage du composant
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
+
+export default withAuth;
