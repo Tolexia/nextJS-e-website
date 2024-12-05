@@ -80,7 +80,7 @@ import Footer from '@/components/footer'
         })
     }, [])
     return (
-        <>
+        <div className={styles.layout}>
             <nav className={styles.nav}>
                 <Link className={styles.logolink} href ="/">
                     <Image
@@ -141,7 +141,7 @@ import Footer from '@/components/footer'
                 })}
             </main> 
             <Footer />
-        </>
+        </div>
     )
     
 })

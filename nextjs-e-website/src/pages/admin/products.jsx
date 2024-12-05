@@ -4,6 +4,7 @@ import Layout from '@/components/layout';
 import styles from '@/styles/Admin.module.css';
 import firebase_app from "@/components/config";
 import WithAuth from '@/components/withAuth';
+import Link from 'next/link';
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -45,21 +46,34 @@ const AdminProducts = () => {
     <Layout>
       <div className={styles.adminContainer}>
         <h1>Administration des produits</h1>
-        <form onSubmit={addProduct}>
-          <input type="text" name="name" value={newProduct.name} onChange={handleInputChange} placeholder="Nom du produit" required />
-          <input type="number" name="price" value={newProduct.price} onChange={handleInputChange} placeholder="Prix" required />
-          <input type="text" name="brand" value={newProduct.brand} onChange={handleInputChange} placeholder="Marque" required />
-          <textarea name="description" value={newProduct.description} onChange={handleInputChange} placeholder="Description" required />
-          <button type="submit">Ajouter un produit</button>
-        </form>
-        <ul>
-          {products.map(([id, product]) => (
-            <li key={id}>
-              {product.name} - ${product.price}
-              <button onClick={() => deleteProduct(id)}>Supprimer</button>
-            </li>
-          ))}
-        </ul>
+        <Link href="/admin/products/add">
+          <button>Ajouter un nouveau produit</button>
+        </Link>
+        <table className={styles.adminTable}>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Prix</th>
+              <th>Marque</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map(([id, product]) => (
+              <tr key={id}>
+                <td>{product.name}</td>
+                <td>${product.price}</td>
+                <td>{product.brand}</td>
+                <td>
+                  <Link href={`/admin/products/${id}/edit`}>
+                    <button>Modifier</button>
+                  </Link>
+                  <button onClick={() => deleteProduct(id)}>Supprimer</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </Layout>
   );

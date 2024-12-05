@@ -1,19 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getCurrentUser } from './auth';
 
 const withAuth = (WrappedComponent) => {
   const WithAuthComponent = (props) => {
     const router = useRouter();
+    const [content, setContent] = useState(<div>Loading...</div>);
 
     useEffect(() => {
       const user = getCurrentUser();
       if (!user) {
         router.replace('/login');
+      }else{
+          setContent(<WrappedComponent {...props} />)
       }
     }, [router]);
 
-    return <WrappedComponent {...props} />;
+    return content;
   };
 
   // Ajout du displayName pour résoudre l'erreur react/display-name

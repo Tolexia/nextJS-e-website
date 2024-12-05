@@ -60,3 +60,24 @@
   .adminLink:hover {
     background-color: hsl(26, 100%, 45%);
   }
+
+  .adminTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .adminTable th,
+  .adminTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .adminTable th {
+    background-color: #f5f5f5;
+  }
+  
+  .adminTable button {
+    margin: 0 5px;
+  }
