@@ -1,0 +1,32 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.imageSection {
+  margin: 1rem 0;
+}
+
+.imagePreview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.imageContainer {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.imageContainer img {
+  object-fit: cover;
+}
+
+.fileInput {
+  margin: 1rem 0;
+} 

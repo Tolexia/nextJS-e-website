@@ -101,8 +101,8 @@ import Footer from '@/components/footer'
                 </div>
                 <div className={[styles.navLeft, activeMenu].join(' ')}>
                     <a>Collections</a>
-                    <a>Men</a>
-                    <a>Women</a>
+                    <Link href="/items?gender=homme">Men</Link>
+                    <Link href="/items?gender=femme">Women</Link>
                     <a>About</a>
                     <a>Contact</a>
                 </div>
