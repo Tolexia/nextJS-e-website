@@ -100,11 +100,11 @@ import Footer from '@/components/footer'
                     <ul></ul>
                 </div>
                 <div className={[styles.navLeft, activeMenu].join(' ')}>
-                    <a>Collections</a>
+                    {/* <a>Collections</a> */}
                     <Link href="/items?gender=homme">Men</Link>
                     <Link href="/items?gender=femme">Women</Link>
-                    <a>About</a>
-                    <a>Contact</a>
+                    <Link href="/about">About</Link>
+                    <Link href="/contact">Contact</Link>
                 </div>
                 <div className={[styles.navRight, activeMenu].join(' ')}>
                     <div className={styles.cartSection}>
