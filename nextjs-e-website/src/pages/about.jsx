@@ -7,9 +7,9 @@ export default function About() {
     <Layout>
       <div className={styles.container}>
         <section className={styles.hero}>
-          <h1>Notre Passion pour les Sneakers</h1>
+          <h1>Our Passion for Sneakers</h1>
           <p className={styles.subtitle}>
-            Découvrez l'excellence et l'authenticité dans chaque paire
+            Discover excellence and authenticity in every pair
           </p>
         </section>
 
@@ -26,41 +26,41 @@ export default function About() {
           </div>
 
           <div className={styles.textSection}>
-            <h2>Notre Histoire</h2>
+            <h2>Our Story</h2>
             <p>
-              Depuis notre création, nous nous sommes engagés à offrir les meilleures sneakers avec un service client exceptionnel. Notre passion pour les sneakers nous pousse à sélectionner méticuleusement chaque modèle pour vous garantir style, confort et qualité.
+              Since our inception, we&apos;ve been committed to offering the finest sneakers with exceptional customer service. Our passion for sneakers drives us to meticulously select each model to ensure style, comfort, and quality.
             </p>
           </div>
 
           <div className={styles.qualitySection}>
-            <h2>Notre Engagement Qualité</h2>
+            <h2>Our Quality Commitment</h2>
             <div className={styles.qualityGrid}>
               <div className={styles.qualityItem}>
-                <h3>Authenticité Garantie</h3>
-                <p>Chaque paire est authentifiée et provient directement des fabricants officiels.</p>
+                <h3>Guaranteed Authenticity</h3>
+                <p>Each pair is authenticated and sourced directly from official manufacturers.</p>
               </div>
               <div className={styles.qualityItem}>
-                <h3>Sélection Premium</h3>
-                <p>Nous choisissons uniquement les meilleurs modèles des marques les plus réputées.</p>
+                <h3>Premium Selection</h3>
+                <p>We choose only the best models from the most reputable brands.</p>
               </div>
               <div className={styles.qualityItem}>
-                <h3>Service Client Dévoué</h3>
-                <p>Notre équipe est disponible 7j/7 pour répondre à vos questions et vous conseiller.</p>
+                <h3>Dedicated Customer Service</h3>
+                <p>Our team is available 7 days a week to answer your questions and provide guidance.</p>
               </div>
               <div className={styles.qualityItem}>
-                <h3>Livraison Soignée</h3>
-                <p>Emballage premium et livraison rapide pour une expérience d'achat parfaite.</p>
+                <h3>Careful Delivery</h3>
+                <p>Premium packaging and fast shipping for a perfect shopping experience.</p>
               </div>
             </div>
           </div>
 
           <div className={styles.promiseSection}>
-            <h2>Notre Promesse Client</h2>
+            <h2>Our Customer Promise</h2>
             <ul>
-              <li>Satisfaction garantie ou remboursé sous 30 jours</li>
-              <li>Prix compétitifs et transparents</li>
-              <li>Suivi personnalisé de chaque commande</li>
-              <li>Programme de fidélité exclusif</li>
+              <li>30-day satisfaction guarantee or money back</li>
+              <li>Competitive and transparent pricing</li>
+              <li>Personalized order tracking</li>
+              <li>Exclusive loyalty program</li>
             </ul>
           </div>
         </section>
