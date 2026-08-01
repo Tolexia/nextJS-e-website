@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import { Inter } from '@next/font/google'
+import { Inter } from 'next/font/google'
 import styles from '@/styles/Checkout.module.css'
 import Layout from '@/components/layout'
 import Cart from "@/components/cart"
