@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { getDatabase, ref, push } from "firebase/database";
-import Layout from '@/components/layout';
 import ProductForm from '@/components/ProductForm';
 import firebase_app from "@/components/config";
 import WithAuth from '@/components/withAuth';
@@ -17,12 +16,10 @@ const AddProduct = () => {
   };
 
   return (
-    <Layout>
       <div className={styles.adminContainer}>
         <h1>Ajouter un produit</h1>
         <ProductForm onSubmit={handleSubmit} buttonText="Ajouter" />
       </div>
-    </Layout>
   );
 };
 

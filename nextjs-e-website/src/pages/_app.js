@@ -1,21 +1,31 @@
 import '@/styles/globals.css'
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { useRouter } from 'next/router'
 import { getAnalytics } from "firebase/analytics";
 import firebase_app from "@/components/config"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import Layout from '@/components/layout'
+import { CartProvider } from '@/components/cartContext'
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+function useStorefrontShell(pathname) {
+  return !pathname.startsWith('/admin') && pathname !== '/login'
+}
 
 export default function App({ Component, pageProps }) {
-  let analytics;
-  
-  const app = firebase_app;
-  // Initialize Firebase
-  if (app.name && typeof window !== 'undefined') {
-    analytics = getAnalytics(app);
+  const router = useRouter();
+  const showShell = useStorefrontShell(router.pathname);
+
+  if (firebase_app.name && typeof window !== 'undefined') {
+    getAnalytics(firebase_app);
   }
-  return <Component {...pageProps} />
+
+  const page = <Component {...pageProps} />;
+
+  if (!showShell) {
+    return page;
+  }
+
+  return (
+    <CartProvider>
+      <Layout>{page}</Layout>
+    </CartProvider>
+  );
 }

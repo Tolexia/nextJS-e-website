@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { getDatabase, ref, get, push, remove } from "firebase/database";
-import Layout from '@/components/layout';
 import styles from '@/styles/Admin.module.css';
 import firebase_app from "@/components/config";
 import WithAuth from '@/components/withAuth';
@@ -43,7 +42,6 @@ const AdminProducts = () => {
     fetchProducts();
   };
   return (
-    <Layout>
       <div className={styles.adminContainer}>
         <h1>Administration des produits</h1>
         <Link href="/admin/products/add">
@@ -75,7 +73,6 @@ const AdminProducts = () => {
           </tbody>
         </table>
       </div>
-    </Layout>
   );
 };
 

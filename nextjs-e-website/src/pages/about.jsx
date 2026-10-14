@@ -1,10 +1,8 @@
-import Layout from '@/components/layout';
 import styles from '@/styles/About.module.css';
 import Image from 'next/image';
 
 export default function About() {
   return (
-    <Layout>
       <div className={styles.container}>
         <section className={styles.hero}>
           <h1>Our Passion for Sneakers</h1>
@@ -65,6 +63,5 @@ export default function About() {
           </div>
         </section>
       </div>
-    </Layout>
   );
 } 

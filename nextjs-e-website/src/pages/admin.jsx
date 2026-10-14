@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import Layout from '@/components/layout';
 import styles from '@/styles/Admin.module.css';
 import WithAuth from '@/components/withAuth';
 import { logOut } from '@/components/auth';
@@ -18,7 +17,6 @@ const Admin = () => {
   };
 
   return (
-    <Layout>
       <div className={styles.adminContainer}>
         <h1>Dashboard Administrateur</h1>
         <button onClick={handleLogout} className={styles.logoutButton}>Déconnexion</button>
@@ -31,7 +29,6 @@ const Admin = () => {
           </Link>
         </nav>
       </div>
-    </Layout>
   );
 };
 

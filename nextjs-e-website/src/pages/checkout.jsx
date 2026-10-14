@@ -2,13 +2,13 @@ import Head from 'next/head'
 
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Checkout.module.css'
-import Layout from '@/components/layout'
 import Cart from "@/components/cart"
 
 import { useState } from 'react';
 import { getDatabase, ref, push } from "firebase/database";
 import firebase_app from "@/components/config";
 import { useRouter } from 'next/router';
+import { useCart } from '@/components/cartContext';
 
 const db = getDatabase(firebase_app);
 const inter = Inter({ subsets: ['latin'] })
@@ -16,6 +16,7 @@ const inter = Inter({ subsets: ['latin'] })
 function Checkout(pageProps) {
     const [formData, setFormData] = useState({});
     const router = useRouter();
+    const { items, clearCart } = useCart();
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,30 +25,20 @@ function Checkout(pageProps) {
       const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // Récupérer les articles du panier depuis le localStorage
-        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-        
-        // Créer l'objet de commande
         const order = {
           ...formData,
-          items: cartItems,
+          items,
           date: new Date().toISOString(),
           status: 'en attente'
         };
     
         try {
-          // Ajouter la commande à la base de données Firebase
           const ordersRef = ref(db, 'orders');
           await push(ordersRef, order);
-    
-          // Vider le panier
-          localStorage.removeItem('cart');
-    
-          // Rediriger vers une page de confirmation
+          clearCart();
           router.push('/order-confirmation');
         } catch (error) {
           console.error("Erreur lors de la création de la commande:", error);
-          // Gérer l'erreur (par exemple, afficher un message à l'utilisateur)
         }
       };
   return (
@@ -58,7 +49,6 @@ function Checkout(pageProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
         <main className={styles.mainSection}>
             <form onSubmit={handleSubmit} className={styles.form}>
                 <h1>CHECKOUT</h1>
@@ -124,7 +114,6 @@ function Checkout(pageProps) {
             </form>
             <Cart/>
         </main>
-      </Layout>
     </>
   )
 }

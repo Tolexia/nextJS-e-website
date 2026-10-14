@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { getDatabase, ref, get, set } from "firebase/database";
-import Layout from '@/components/layout';
 import styles from '@/styles/Admin.module.css';
 import firebase_app from "@/components/config";
 import WithAuth from '@/components/withAuth';
@@ -82,7 +81,6 @@ const AdminOrders = () => {
   };
 
   return (
-    <Layout>
       <div className={styles.adminContainer}>
         <h1>Administration des Commandes</h1>
         <div className={styles.actionsBar}>
@@ -144,7 +142,6 @@ const AdminOrders = () => {
           </tbody>
         </table>
       </div>
-    </Layout>
   );
 };
 

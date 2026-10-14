@@ -1,7 +1,7 @@
 import styles from '@/styles/content.module.css'
-import Link from 'next/link'
+import IntentLink from '@/components/IntentLink'
 import Image from 'next/image'
-import React, {useState,useEffect} from 'react'
+import React from 'react'
 
 function Content({items})
 {
@@ -26,7 +26,7 @@ function Content({items})
                         <h1>{products[0].name}</h1>
                         <p>{products[0].description}</p>
                     </div>
-                    <Link href = {urls[0]}  className= {styles.link}>see product</Link>
+                    <IntentLink href = {urls[0]}  className= {styles.link}>see product</IntentLink>
                 </div>
                 <div className= {styles.picwrapper}>
                     <Image
@@ -53,7 +53,7 @@ function Content({items})
                         <h1>{products[1].name}</h1>
                         <p>{products[1].description}</p>
                     </div>
-                    <Link href = {urls[1]}  className= {styles.link}>see product</Link>
+                    <IntentLink href = {urls[1]}  className= {styles.link}>see product</IntentLink>
                 </div>
             </section>
             <section id = "third" className={[styles.third, styles.productwrapper].join(' ')}>
@@ -61,7 +61,7 @@ function Content({items})
                     <div>
                         <h1>{products[2].name}</h1>
                     </div>
-                    <Link href = {urls[2]}  className= {styles.link}>see product</Link>
+                    <IntentLink href = {urls[2]}  className= {styles.link}>see product</IntentLink>
                 </div>
                 <div className= {styles.picwrapper}>
                     <Image
@@ -87,7 +87,7 @@ function Content({items})
                     <div>
                         <h1>{products[3].name}</h1>
                     </div>
-                    <Link href = {urls[3]}  className= {styles.link}>see product</Link>
+                    <IntentLink href = {urls[3]}  className= {styles.link}>see product</IntentLink>
                 </div>
             </section>
         </div>

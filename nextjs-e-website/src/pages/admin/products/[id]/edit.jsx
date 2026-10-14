@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { getDatabase, ref, get, update } from "firebase/database";
-import Layout from '@/components/layout';
 import ProductForm from '@/components/ProductForm';
 import firebase_app from "@/components/config";
 import WithAuth from '@/components/withAuth';
@@ -37,7 +36,6 @@ const EditProduct = () => {
   if (!product) return <div>Chargement...</div>;
 
   return (
-    <Layout>
       <div className={styles.adminContainer}>
         <h1>Modifier le produit</h1>
         <ProductForm 
@@ -46,7 +44,6 @@ const EditProduct = () => {
           buttonText="Mettre à jour" 
         />
       </div>
-    </Layout>
   );
 };
 
