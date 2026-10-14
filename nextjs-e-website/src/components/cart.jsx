@@ -2,6 +2,7 @@ import {useState, useEffect } from "react"
 import styles from "@/styles/Cart.module.css";
 import Image from 'next/image'
 import Link from 'next/link'
+import { parseCartFromStorage, resolveCartImage } from '@/utils/cartImage'
 
 export default function Cart()
 {
@@ -9,46 +10,43 @@ export default function Cart()
     let [total, setTotal] = useState(0)
     let shipping = 10;
     useEffect(() => {
-        if(localStorage.getItem('cart') != null)
-        {
-            let i = 0;
-            const order = [];
-            const cartItems = JSON.parse(localStorage.getItem('cart'));
-            cartItems.forEach((item) => {
-                const totalThisItem = parseFloat(item.price) * item.nb;
-                console.log(totalThisItem)
-                const VAT = 0.20 * totalThisItem;
-                setTotal(total + (totalThisItem+VAT));
-                let files = JSON.parse(item.filename);
-                let mainPic = files[0];
-                if(!mainPic.match('images'))
-                {
-                    item.filename = "/images/"+mainPic
-                }
-                let product = 
-                <div id={i}  key={i} value = {i} className = {styles.cartItem}>
-                    <Image
-                        src= {item.filename}
-                        alt={item.name}
-                        width={60}
-                        height={60}
-                    />
-                    <div className = {styles.itemDescription}>
-                        <span className={styles.itemname}>{item.name}</span>
-                        <span className={styles.itemprice}>${item.price}</span>
-                    </div>
-                    <span data-id = {i}>x{item.nb}</span>
-                </div>
-                order.push(product)
-                i++;
-            });
-            if(order.length > 0 )
-            {
-                setCart(
-                <div className={styles.items}>
-                    {order}
-                </div>)
+        const cartItems = parseCartFromStorage();
+        let i = 0;
+        const order = [];
+        let computedTotal = 0;
+        cartItems.forEach((item) => {
+            if (!item || typeof item !== 'object') {
+                return;
             }
+            const quantity = Number(item.nb) || 0;
+            const totalThisItem = parseFloat(item.price) * quantity;
+            const VAT = 0.20 * totalThisItem;
+            computedTotal += totalThisItem + VAT;
+            const imageSrc = resolveCartImage(item.filename);
+            let product = 
+            <div id={i}  key={i} value = {i} className = {styles.cartItem}>
+                <Image
+                    src= {imageSrc}
+                    alt={item.name || 'Product'}
+                    width={60}
+                    height={60}
+                />
+                <div className = {styles.itemDescription}>
+                    <span className={styles.itemname}>{item.name}</span>
+                    <span className={styles.itemprice}>${item.price}</span>
+                </div>
+                <span data-id = {i}>x{quantity}</span>
+            </div>
+            order.push(product)
+            i++;
+        });
+        setTotal(computedTotal);
+        if(order.length > 0 )
+        {
+            setCart(
+            <div className={styles.items}>
+                {order}
+            </div>)
         }
     }, [])
     return (

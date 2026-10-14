@@ -1,9 +1,9 @@
-import Script from 'next/script'
 import styles from "@/styles/layout.module.css";
 import React, {useState,useEffect, useImperativeHandle, forwardRef} from 'react';
 import Image from 'next/image'
 import Link from 'next/link'
 import Footer from '@/components/footer'
+import { parseCartFromStorage, resolveCartImage } from '@/utils/cartImage'
 
  const Layout = forwardRef(({children}, ref) => 
 {
@@ -21,57 +21,53 @@ import Footer from '@/components/footer'
       );
     function removeItemFromCart(index)
     {
-        const currentCart = JSON.parse(localStorage.getItem('cart'));
-        currentCart.splice(index, 1);
+        const currentCart = parseCartFromStorage();
+        currentCart.splice(Number(index), 1);
         localStorage.setItem('cart', JSON.stringify(currentCart));
         cartInit();
     }
     function cartInit() {
-        if(localStorage.getItem('cart') != null)
-        {
-            let i = 0;
-            const order = [];
-            const cartItems = JSON.parse(localStorage.getItem('cart'));
-            let newItemCount = 0;
-            cartItems.forEach((item) => {
-                newItemCount += item.nb;
-                let files = JSON.parse(item.filename);
-                let mainPic = files[0];
-                if(!mainPic.match('images'))
-                {
-                    item.filename = "/images/"+mainPic
-                }
-                let product = 
-                <div id={i}  key={i} value = {i} className = {styles.cartItem}>
-                    <Image
-                        src= {item.filename}
-                        alt={item.name}
-                        width={40}
-                        height={40}
-                    />
-                    <div className = {styles.itemDescription}>
-                        <span>{item.name}</span>
-                        <span>${item.price} x {item.nb} <b>${parseFloat(item.price) * item.nb}</b></span>
-                    </div>
-                    <span className= {styles.removal} data-id = {i} onClick={e => confirm("Remove this item ?") ? removeItemFromCart(e.target.dataset.id) : ""}>X</span>
+        const cartItems = parseCartFromStorage();
+        let i = 0;
+        const order = [];
+        let newItemCount = 0;
+        cartItems.forEach((item) => {
+            if (!item || typeof item !== 'object') {
+                return;
+            }
+            const quantity = Number(item.nb) || 0;
+            newItemCount += quantity;
+            const imageSrc = resolveCartImage(item.filename);
+            let product = 
+            <div id={i}  key={i} value = {i} className = {styles.cartItem}>
+                <Image
+                    src= {imageSrc}
+                    alt={item.name || 'Product'}
+                    width={40}
+                    height={40}
+                />
+                <div className = {styles.itemDescription}>
+                    <span>{item.name}</span>
+                    <span>${item.price} x {quantity} <b>${parseFloat(item.price) * quantity}</b></span>
                 </div>
-                order.push(product)
-                i++;
-            });
-            if(order.length > 0 )
-            {
-            setCart(
-            <div>
-                {order}
-                <Link href = "/checkout" className={styles.checkout}>checkout</Link>
-            </div>)
-            }
-            else
-            {
-                setCart(<p>Your cart is empty.</p>);
-            }
-            setitemcount(newItemCount)
+                <span className= {styles.removal} data-id = {i} onClick={e => confirm("Remove this item ?") ? removeItemFromCart(e.target.dataset.id) : ""}>X</span>
+            </div>
+            order.push(product)
+            i++;
+        });
+        if(order.length > 0 )
+        {
+        setCart(
+        <div>
+            {order}
+            <Link href = "/checkout" className={styles.checkout}>checkout</Link>
+        </div>)
         }
+        else
+        {
+            setCart(<p>Your cart is empty.</p>);
+        }
+        setitemcount(newItemCount)
     }
     useEffect(() => {
         cartInit()
