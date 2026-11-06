@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getCurrentUser } from './auth';
+import { isAdminUser, waitForAuthUser } from './auth';
 
 const withAuth = (WrappedComponent) => {
   const WithAuthComponent = (props) => {
@@ -8,24 +8,40 @@ const withAuth = (WrappedComponent) => {
     const [content, setContent] = useState(<div>Loading...</div>);
 
     useEffect(() => {
-      const user = getCurrentUser();
-      if (!user) {
-        router.replace('/login');
-      }else{
-          setContent(<WrappedComponent {...props} />)
-      }
+      let cancelled = false;
+
+      (async () => {
+        const user = await waitForAuthUser();
+        if (!user) {
+          router.replace('/login');
+          return;
+        }
+
+        const admin = await isAdminUser(user);
+        if (!admin) {
+          router.replace('/login');
+          return;
+        }
+
+        if (!cancelled) {
+          setContent(<WrappedComponent {...props} />);
+        }
+      })();
+
+      return () => {
+        cancelled = true;
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- gate once per mount
     }, [router]);
 
     return content;
   };
 
-  // Ajout du displayName pour résoudre l'erreur react/display-name
   WithAuthComponent.displayName = `WithAuth(${getDisplayName(WrappedComponent)})`;
-  
+
   return WithAuthComponent;
 };
 
-// Fonction utilitaire pour obtenir le nom d'affichage du composant
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }

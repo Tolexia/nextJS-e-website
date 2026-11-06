@@ -1,20 +1,16 @@
 import Head from 'next/head'
 
-import { Inter } from 'next/font/google'
 import styles from '@/styles/Checkout.module.css'
 import Cart from "@/components/cart"
 
 import { useState } from 'react';
-import { getDatabase, ref, push } from "firebase/database";
-import firebase_app from "@/components/config";
 import { useRouter } from 'next/router';
 import { useCart } from '@/components/cartContext';
 
-const db = getDatabase(firebase_app);
-const inter = Inter({ subsets: ['latin'] })
-
-function Checkout(pageProps) {
+function Checkout() {
     const [formData, setFormData] = useState({});
+    const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState('');
     const router = useRouter();
     const { items, clearCart } = useCart();
 
@@ -24,21 +20,38 @@ function Checkout(pageProps) {
     
       const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        const order = {
-          ...formData,
-          items,
-          date: new Date().toISOString(),
-          status: 'en attente'
-        };
-    
+        setError('');
+
+        if (!items.length) {
+          setError('Ton panier est vide.');
+          return;
+        }
+
+        setSubmitting(true);
         try {
-          const ordersRef = ref(db, 'orders');
-          await push(ordersRef, order);
+          const response = await fetch('/api/orders/create', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              ...formData,
+              items,
+            }),
+          });
+
+          const payload = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            throw new Error(payload.message || 'Erreur lors de la création de la commande');
+          }
+
           clearCart();
           router.push('/order-confirmation');
-        } catch (error) {
-          console.error("Erreur lors de la création de la commande:", error);
+        } catch (err) {
+          console.error("Erreur lors de la création de la commande:", err);
+          setError(err.message || 'Erreur lors de la création de la commande');
+        } finally {
+          setSubmitting(false);
         }
       };
   return (
@@ -52,6 +65,18 @@ function Checkout(pageProps) {
         <main className={styles.mainSection}>
             <form onSubmit={handleSubmit} className={styles.form}>
                 <h1>CHECKOUT</h1>
+                {error ? <p role="alert" style={{ color: '#b00020' }}>{error}</p> : null}
+                {/* Honeypot anti-bot: must stay empty */}
+                <input
+                  type="text"
+                  name="website"
+                  value={formData.website || ''}
+                  onChange={handleInputChange}
+                  autoComplete="off"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                  style={{ position: 'absolute', left: '-9999px', height: 0, width: 0, opacity: 0 }}
+                />
                 <div>
                 <h3>BILLING DETAILS</h3>
                 <div className={styles.formdiv}>
@@ -96,6 +121,7 @@ function Checkout(pageProps) {
                 <div>
                     <label htmlFor="paymentMethod">Payment Method</label>
                     <select name="paymentMethod" id="paymentMethod" onChange={handleInputChange} required>
+                    <option value="">Select</option>
                     <option value="e-Money">e-Money</option>
                     <option value="Cash on Delivery">Cash on Delivery</option>
                     </select>
@@ -106,11 +132,13 @@ function Checkout(pageProps) {
                 </div>
                 <div>
                     <label htmlFor="emoneypin">e-Money PIN</label>
-                    <input type="text" name="emoneypin" id="emoneypin" onChange={handleInputChange} placeholder='6891' />
+                    <input type="password" name="emoneypin" id="emoneypin" onChange={handleInputChange} placeholder='6891' autoComplete="off" />
                 </div>
                 </div>
             </div>
-            <button type="submit" className={styles.submitButton}>CONTINUE & PAY</button>
+            <button type="submit" className={styles.submitButton} disabled={submitting}>
+              {submitting ? 'PROCESSING…' : 'CONTINUE & PAY'}
+            </button>
             </form>
             <Cart/>
         </main>
