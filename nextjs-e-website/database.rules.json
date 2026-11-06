@@ -1,6 +1,19 @@
 {
   "rules": {
     ".read": false,
-    ".write": false
+    ".write": false,
+    "shoes": {
+      ".read": true,
+      ".write": "auth != null && auth.token.admin === true",
+      ".indexOn": ["name"]
+    },
+    "orders": {
+      ".read": "auth != null && auth.token.admin === true",
+      ".write": "auth != null && auth.token.admin === true"
+    },
+    "products": {
+      ".read": "auth != null && auth.token.admin === true",
+      ".write": "auth != null && auth.token.admin === true"
+    }
   }
 }

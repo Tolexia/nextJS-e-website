@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { signIn } from '@/components/auth';
+import { ensureAdminClaim, signIn } from '@/components/auth';
 import styles from '@/styles/Login.module.css';
 
 export default function Login() {
@@ -11,11 +11,17 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     try {
-      await signIn(email, password);
+      const user = await signIn(email, password);
+      await ensureAdminClaim(user);
       router.push('/admin');
-    } catch (error) {
-      setError("Échec de l'authentification. Veuillez vérifier vos identifiants.");
+    } catch (err) {
+      setError(
+        err?.message === 'Compte non autorisé admin'
+          ? "Ce compte n'est pas autorisé à accéder à l'administration."
+          : "Échec de l'authentification. Veuillez vérifier vos identifiants."
+      );
     }
   };
 
