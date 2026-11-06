@@ -2,31 +2,46 @@ import { useState, useEffect } from 'react';
 import { getDatabase, ref, get, set } from "firebase/database";
 import styles from '@/styles/Admin.module.css';
 import firebase_app from "@/components/config";
+import { ensureAdminAuth } from '@/components/auth';
 import WithAuth from '@/components/withAuth';
 import Link from 'next/link';
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrders, setSelectedOrders] = useState([]);
+  const [loadError, setLoadError] = useState('');
 
   const fetchOrders = async () => {
+    await ensureAdminAuth();
     const db = getDatabase(firebase_app);
     const ordersRef = ref(db, 'orders');
     const snapshot = await get(ordersRef);
     if (snapshot.exists()) {
       setOrders(Object.entries(snapshot.val()));
+    } else {
+      setOrders([]);
     }
+    setLoadError('');
   };
   
   useEffect(() => {
-    fetchOrders();
+    fetchOrders().catch((error) => {
+      console.error(error);
+      setLoadError("Impossible de charger les commandes.");
+    });
   }, []);
 
   const updateOrderStatus = async (orderId, newStatus) => {
-    const db = getDatabase(firebase_app);
-    const orderRef = ref(db, `orders/${orderId}`);
-    await set(orderRef, { ...orders.find(([id]) => id === orderId)[1], status: newStatus });
-    fetchOrders();
+    try {
+      await ensureAdminAuth();
+      const db = getDatabase(firebase_app);
+      const orderRef = ref(db, `orders/${orderId}`);
+      await set(orderRef, { ...orders.find(([id]) => id === orderId)[1], status: newStatus });
+      await fetchOrders();
+    } catch (error) {
+      console.error(error);
+      setLoadError("Impossible de mettre à jour la commande.");
+    }
   };
 
   const handleCheckboxChange = (orderId) => {
@@ -83,6 +98,7 @@ const AdminOrders = () => {
   return (
       <div className={styles.adminContainer}>
         <h1>Administration des Commandes</h1>
+        {loadError && <p>{loadError}</p>}
         <div className={styles.actionsBar}>
           <Link href="/admin/orders/add">
             <button>Nouvelle commande</button>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { signIn } from '@/components/auth';
+import { logOut, signIn, userIsAdmin } from '@/components/auth';
 import styles from '@/styles/Login.module.css';
 
 export default function Login() {
@@ -12,7 +12,12 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signIn(email, password);
+      const user = await signIn(email, password);
+      if (!(await userIsAdmin(user))) {
+        await logOut();
+        setError("Ce compte ne peut pas accéder à l'administration.");
+        return;
+      }
       router.push('/admin');
     } catch (error) {
       setError("Échec de l'authentification. Veuillez vérifier vos identifiants.");

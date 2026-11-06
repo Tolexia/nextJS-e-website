@@ -26,7 +26,14 @@ function Checkout(pageProps) {
         e.preventDefault();
         
         const order = {
-          ...formData,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          zipcode: formData.zipcode,
+          city: formData.city,
+          country: formData.country,
+          paymentMethod: formData.paymentMethod,
           items,
           date: new Date().toISOString(),
           status: 'en attente'
@@ -99,14 +106,6 @@ function Checkout(pageProps) {
                     <option value="e-Money">e-Money</option>
                     <option value="Cash on Delivery">Cash on Delivery</option>
                     </select>
-                </div>
-                <div>
-                    <label htmlFor="emoneynumber">e-Money Number</label>
-                    <input type="text" name="emoneynumber" id="emoneynumber" onChange={handleInputChange} placeholder='24304530' />
-                </div>
-                <div>
-                    <label htmlFor="emoneypin">e-Money PIN</label>
-                    <input type="text" name="emoneypin" id="emoneypin" onChange={handleInputChange} placeholder='6891' />
                 </div>
                 </div>
             </div>
