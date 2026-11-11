@@ -120,6 +120,13 @@ button.more {
     border-radius: 12px;
 }
 
+.thumbButton {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
 @media screen and (min-width: 768px) {
     .mainPicture {
         border-radius: 20px;

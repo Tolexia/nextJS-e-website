@@ -13,7 +13,11 @@ export default function Footer()
         <div className={styles.footerRight}>
             <div className={styles.links}>
                 <Link href = "/">Home</Link>
-                <Link href = "/add">New</Link>
+                <Link href = "/items">Catalogue</Link>
+                <Link href = "/mentions-legales">Mentions légales</Link>
+                <Link href = "/cgv">CGV</Link>
+                <Link href = "/confidentialite">Confidentialité</Link>
+                <Link href = "/cookies">Cookies</Link>
             </div>
         </div>
     </footer>

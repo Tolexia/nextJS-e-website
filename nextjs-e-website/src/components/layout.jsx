@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image'
 import Link from 'next/link'
 import Footer from '@/components/footer'
+import CookieBanner from '@/components/CookieBanner'
 import { resolveCartImage } from '@/utils/cartImage'
 import { useCart } from '@/components/cartContext'
 
@@ -119,6 +120,7 @@ export default function Layout({ children }) {
                 {children}
             </main>
             <Footer />
+            <CookieBanner />
         </div>
     );
 }

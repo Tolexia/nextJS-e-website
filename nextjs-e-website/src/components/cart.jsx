@@ -1,13 +1,11 @@
 import styles from "@/styles/Cart.module.css";
 import Image from 'next/image'
-import Link from 'next/link'
 import { resolveCartImage } from '@/utils/cartImage'
 import { useCart } from '@/components/cartContext'
 
 export default function Cart()
 {
     const { items } = useCart();
-    const shipping = 10;
     let computedTotal = 0;
 
     const order = items.map((item, i) => {
@@ -15,9 +13,8 @@ export default function Cart()
             return null;
         }
         const quantity = Number(item.nb) || 0;
-        const totalThisItem = parseFloat(item.price) * quantity;
-        const VAT = 0.20 * totalThisItem;
-        computedTotal += totalThisItem + VAT;
+        const totalThisItem = (Number.parseFloat(item.price) || 0) * quantity;
+        computedTotal += totalThisItem;
         const imageSrc = resolveCartImage(item.filename);
         return (
             <div id={i} key={i} className={styles.cartItem}>
@@ -44,19 +41,7 @@ export default function Cart()
                 <span className={styles.resumeleft}>TOTAL</span>
                 <span className={styles.resumeright}>$ {computedTotal}</span>
             </div>
-            <div className={styles.resumeItem}>
-                <span className={styles.resumeleft}>SHIPPING</span>
-                <span className={styles.resumeright}>$ {shipping}</span>
-            </div>
-            <div className={styles.resumeItem}>
-                <span className={styles.resumeleft}>VAT (INCLUDED)</span>
-                <span className={styles.resumeright}>$ {0.20*computedTotal}</span>
-            </div>
-            <div className={styles.resumeItem}>
-                <span className={styles.resumeleft}>GRAND TOTAL</span>
-                <span className={styles.resumeright}>$ {computedTotal+shipping}</span>
-            </div>
-            <Link className={styles.link} href = "">CONTINUE & PAY</Link>
+            <p>Frais de port non facturés. Le serveur recalcule ce total avant Stripe.</p>
         </div>
     )
 }

@@ -1,0 +1,22 @@
+.article {
+  max-width: 720px;
+  margin: 2em auto;
+  padding: 0 1.5em 3em;
+  line-height: 1.5;
+}
+
+.article h1 {
+  margin-bottom: 0.6em;
+}
+
+.article h2 {
+  margin-top: 1.4em;
+  font-size: 1.1rem;
+}
+
+.warning {
+  padding: 0.8em 1em;
+  margin-bottom: 1.5em;
+  background: #fff4e5;
+  border: 1px solid #e0c48a;
+}

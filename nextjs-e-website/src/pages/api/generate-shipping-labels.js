@@ -1,11 +1,21 @@
 import PDFDocument from 'pdfkit';
+import { verifyAdminToken } from '@/lib/firebaseAdmin.mjs';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
+  try {
+    await verifyAdminToken(req.headers.authorization);
+  } catch (error) {
+    return res.status(error.status || 401).json({ message: error.message || 'Non autorisé' });
+  }
+
   const { orders } = req.body;
+  if (!Array.isArray(orders) || orders.length === 0 || orders.length > 50) {
+    return res.status(400).json({ message: 'Commandes invalides' });
+  }
 
   // Créer un nouveau document PDF
   const doc = new PDFDocument();

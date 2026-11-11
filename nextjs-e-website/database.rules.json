@@ -10,8 +10,8 @@
     "orders": {
       ".read": "auth != null && auth.token.admin == true",
       "$id": {
-        ".write": "auth != null && auth.token.admin == true || (!data.exists() && newData.exists())",
-        ".validate": "newData.hasChildren(['name', 'email', 'phone', 'address', 'date', 'status']) && newData.child('name').isString() && newData.child('name').val().length < 200 && newData.child('email').isString() && newData.child('email').val().length < 200 && (auth != null && auth.token.admin == true || (!data.exists() && newData.child('status').val() == 'en attente' && !newData.hasChild('emoneypin') && !newData.hasChild('emoneynumber')))"
+        ".write": "auth != null && auth.token.admin == true",
+        ".validate": "newData.hasChildren(['name', 'email', 'phone', 'address', 'date', 'status']) && newData.child('name').isString() && newData.child('name').val().length < 200 && newData.child('email').isString() && newData.child('email').val().length < 200 && newData.child('status').isString() && newData.child('status').val().length < 40"
       }
     },
     "products": {

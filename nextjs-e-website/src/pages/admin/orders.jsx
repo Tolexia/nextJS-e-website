@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getDatabase, ref, get, set } from "firebase/database";
 import styles from '@/styles/Admin.module.css';
 import firebase_app from "@/components/config";
-import { ensureAdminAuth } from '@/components/auth';
+import { auth, ensureAdminAuth } from '@/components/auth';
 import WithAuth from '@/components/withAuth';
 import Link from 'next/link';
 
@@ -75,10 +75,12 @@ const AdminOrders = () => {
       }));
 
     try {
+      const token = await auth.currentUser?.getIdToken();
       const response = await fetch('/api/generate-shipping-labels', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ orders: selectedOrdersData }),
       });
@@ -142,6 +144,8 @@ const AdminOrders = () => {
                     value={order.status}
                     onChange={(e) => updateOrderStatus(id, e.target.value)}
                   >
+                    <option value="en attente de paiement">En attente de paiement</option>
+                    <option value="payée">Payée</option>
                     <option value="en attente">En attente</option>
                     <option value="expédiée">Expédiée</option>
                     <option value="livrée">Livrée</option>

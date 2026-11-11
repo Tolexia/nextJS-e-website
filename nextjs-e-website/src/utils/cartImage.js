@@ -1,48 +1,50 @@
 const PLACEHOLDER_IMAGE = '/images/icon-cart.svg';
 
-/**
- * Resolve a cart/product filename to a usable image path.
- * Accepts: JSON string array, real array, path string, or missing values.
- */
-export function resolveCartImage(filename) {
-  if (filename == null || filename === '') {
-    return PLACEHOLDER_IMAGE;
+function rejectTraversal(value) {
+  return value.includes('..') || value.includes('\\');
+}
+
+export function resolveImageSrc(value) {
+  if (typeof value !== 'string') {
+    return null;
   }
+  const trimmed = value.trim();
+  if (!trimmed || rejectTraversal(trimmed)) {
+    return null;
+  }
+  if (/^https?:\/\//i.test(trimmed) || trimmed.startsWith('/')) {
+    return trimmed;
+  }
+  if (trimmed.startsWith('images/')) {
+    return `/${trimmed}`;
+  }
+  return `/images/${trimmed}`;
+}
 
-  let mainPic = null;
-
+export function parseImageList(filename) {
   if (Array.isArray(filename)) {
-    mainPic = filename[0];
-  } else if (typeof filename === 'string') {
-    const trimmed = filename.trim();
-    if (trimmed.startsWith('/') || trimmed.includes('images/')) {
-      return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
-    }
+    return filename.map(resolveImageSrc).filter(Boolean);
+  }
+  if (typeof filename !== 'string' || filename.trim() === '') {
+    return [];
+  }
+  const trimmed = filename.trim();
+  if (trimmed.startsWith('[')) {
     try {
       const parsed = JSON.parse(trimmed);
       if (Array.isArray(parsed)) {
-        mainPic = parsed[0];
-      } else if (typeof parsed === 'string') {
-        mainPic = parsed;
+        return parsed.map(resolveImageSrc).filter(Boolean);
       }
     } catch {
-      mainPic = trimmed;
+      return [];
     }
   }
+  const single = resolveImageSrc(trimmed);
+  return single ? [single] : [];
+}
 
-  if (mainPic == null || mainPic === '') {
-    return PLACEHOLDER_IMAGE;
-  }
-
-  if (typeof mainPic !== 'string') {
-    return PLACEHOLDER_IMAGE;
-  }
-
-  if (mainPic.includes('images')) {
-    return mainPic.startsWith('/') ? mainPic : `/${mainPic}`;
-  }
-
-  return `/images/${mainPic}`;
+export function resolveCartImage(filename) {
+  return parseImageList(filename)[0] || PLACEHOLDER_IMAGE;
 }
 
 export function parseCartFromStorage() {

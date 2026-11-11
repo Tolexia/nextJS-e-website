@@ -1,14 +1,7 @@
 import Head from 'next/head'
-
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import Productslist from '@/components/productslist'
-import Link from 'next/link';
 import Content from '@/components/content'
 import { limitToFirst, orderByChild, ref, query, get, getDatabase } from 'firebase/database';
 import firebase_app from "@/components/config"
-
-const inter = Inter({ subsets: ['latin'] })
 
 function Home(pageProps) {
   // console.log(pageProps)
@@ -25,17 +18,15 @@ function Home(pageProps) {
     </>
   )
 }
-Home.getInitialProps = async (context) => {
-  
-  let item = {};
-  const db = getDatabase(firebase_app);
-  return get(query(ref(db, 'shoes'), orderByChild('name'), limitToFirst(5)))
-  .then(snapshot => {
-      item =Object.entries(snapshot.val());
-      
-      return {
-          items:item
-      }
-  })
+Home.getInitialProps = async () => {
+  try {
+    const db = getDatabase(firebase_app);
+    const snapshot = await get(query(ref(db, 'shoes'), orderByChild('name'), limitToFirst(5)));
+    const value = snapshot.val();
+    return { items: value ? Object.entries(value) : [] };
+  } catch (error) {
+    console.error(error);
+    return { items: [] };
+  }
 }
 export default Home;

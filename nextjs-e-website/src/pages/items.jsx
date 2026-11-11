@@ -4,6 +4,7 @@ import styles from '@/styles/Items.module.css';
 import firebase_app from "@/components/config";
 import IntentLink from '@/components/IntentLink';
 import Image from 'next/image';
+import { resolveCartImage } from '@/utils/cartImage';
 import { useRouter } from 'next/router';
 
 const SKELETON_COUNT = 8;
@@ -71,12 +72,11 @@ export default function Items() {
                 </div>
               ))
             : products.map(([id, product]) => {
-                const mainImage = JSON.parse(product.filename)[0];
                 const href = `/product?id=${encodeURIComponent(product.name)}`;
                 return (
                   <IntentLink href={href} key={id} className={styles.card}>
                     <Image
-                      src={`/images/${mainImage}`}
+                      src={resolveCartImage(product.filename)}
                       alt={product.name}
                       width={200}
                       height={200}

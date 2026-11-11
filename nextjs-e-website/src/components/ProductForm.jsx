@@ -1,20 +1,23 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import styles from '@/styles/ProductForm.module.css';
+import { parseImageList } from '@/utils/cartImage';
+import { replaceProductImages } from '@/lib/productImages';
 
 const ProductForm = ({ product, onSubmit, buttonText }) => {
+    const initialImages = parseImageList(product?.filename);
     const [formData, setFormData] = useState({
       name: product?.name || '',
       price: product?.price || '',
       brand: product?.brand || '',
       description: product?.description || '',
       gender: product?.gender || '',
-      filename: product?.filename ? JSON.parse(product.filename) : []
+      filename: JSON.stringify(initialImages)
     });
     
-    const [previewImages, setPreviewImages] = useState(
-      product?.filename ? JSON.parse(product.filename) : []
-    );
+    const [previewImages, setPreviewImages] = useState(initialImages);
+    const [uploadError, setUploadError] = useState('');
+    const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef(null);
 
     const handleInputChange = (e) => {
@@ -22,40 +25,18 @@ const ProductForm = ({ product, onSubmit, buttonText }) => {
     };
 
     const handleImageChange = async (e) => {
-      const files = Array.from(e.target.files);
-      
-      // Supprimer les anciennes images si elles existent
-      if (previewImages.length > 0) {
-        try {
-          const response = await fetch('/api/deleteImages', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ filenames: previewImages })
-          });
-          if (!response.ok) throw new Error('Erreur lors de la suppression des images');
-        } catch (error) {
-          console.error('Erreur:', error);
-          return;
-        }
-      }
-
-      // Upload des nouvelles images
-      const formData = new FormData();
-      files.forEach(file => formData.append('images', file));
-
+      const files = Array.from(e.target.files || []);
+      e.target.value = '';
+      setUploadError('');
+      setUploading(true);
       try {
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          body: formData
-        });
-        
-        if (!response.ok) throw new Error('Erreur lors de l\'upload');
-        
-        const { filenames } = await response.json();
-        setPreviewImages(filenames);
-        setFormData(prev => ({ ...prev, filename: JSON.stringify(filenames) }));
+        const urls = await replaceProductImages(files, previewImages);
+        setPreviewImages(urls);
+        setFormData(prev => ({ ...prev, filename: JSON.stringify(urls) }));
       } catch (error) {
-        console.error('Erreur:', error);
+        setUploadError(error.message || 'Erreur lors de l\'envoi des images');
+      } finally {
+        setUploading(false);
       }
     };
 
@@ -84,17 +65,19 @@ const ProductForm = ({ product, onSubmit, buttonText }) => {
             onChange={handleImageChange}
             ref={fileInputRef}
             className={styles.fileInput}
+            disabled={uploading}
           />
+          {uploadError && <p>{uploadError}</p>}
           
           <div className={styles.imagePreview}>
-            {previewImages.map((filename, index) => (
-              <div key={index} className={styles.imageContainer}>
+            {previewImages.map((filename) => (
+              <div key={filename} className={styles.imageContainer}>
                 <Image
-                  src={`/images/${filename}`}
-                  alt={`Preview ${index + 1}`}
+                  src={filename}
+                  alt={formData.name || "Aperçu"}
                   width={100}
                   height={100}
-                  objectFit="cover"
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
             ))}
