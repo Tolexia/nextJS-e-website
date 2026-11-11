@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "eslint": "^8.57.1",
-    "eslint-config-next": "15.5.27",
+    "eslint-config-next": "15.5.29",
     "firebase": "^12.19.0",
     "formidable": "^2.1.5",
-    "next": "15.5.27",
+    "next": "15.5.29",
     "pdfkit": "^0.15.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -21,6 +21,8 @@
   },
   "overrides": {
     "postcss": ">=8.5.23",
-    "@grpc/grpc-js": ">=1.13.6"
+    "@grpc/grpc-js": ">=1.13.6",
+    "re2js": ">=2.8.7",
+    "qs": ">=6.16.1"
   }
 }
