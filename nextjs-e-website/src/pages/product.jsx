@@ -7,6 +7,7 @@ import { query, getDatabase, ref, orderByChild, equalTo, get } from "firebase/da
 import firebase_app from "@/components/config"
 import { useCart } from '@/components/cartContext'
 import { parseImageList } from '@/utils/cartImage'
+import { readStock } from '@/lib/stock.mjs'
 
 function struckPrice(price, discount) {
     const percent = Number.parseInt(discount, 10);
@@ -21,7 +22,7 @@ function struckPrice(price, discount) {
 }
 
 function Product({item}){
-    const { addItem } = useCart();
+    const { addItem, items: cartItems } = useCart();
     const [count, setCount] = useState(0);
     const images = item ? parseImageList(item.filename) : [];
     const [mainPic, setMainPic] = useState(images[0] || "/images/icon-cart.svg");
@@ -31,6 +32,11 @@ function Product({item}){
     }
 
     const previousPrice = struckPrice(item.price, item.discount);
+    const stock = readStock(item.stock);
+    const alreadyInCart = cartItems
+        .filter((entry) => entry?.id === item.id)
+        .reduce((sum, entry) => sum + (Number(entry.nb) || 0), 0);
+    const remaining = stock === null ? 0 : Math.max(0, stock - alreadyInCart);
 
     return (
     <>
@@ -82,13 +88,14 @@ function Product({item}){
                 </div>
                     {previousPrice ? <span className={styles.initial}>$ {previousPrice}</span> : null}
                </div>
+               <p>{stock === null ? "Stock non renseigné" : remaining === 0 ? "Rupture de stock" : `${remaining} en stock`}</p>
                <div className={styles.handlecart}>
                     <div className={styles.handleitem}>
                         <button type='button' onClick={() => setCount(count > 1 ? count - 1 : 0)} className={styles.less}>-</button>
                         <input type='text' className={styles.itemNb} value={count} readOnly/>
-                        <button type='button' onClick={() => {setCount(count + 1)}} className={styles.more}>+</button>
+                        <button type='button' onClick={() => setCount(count >= remaining ? count : count + 1)} className={styles.more} disabled={count >= remaining}>+</button>
                     </div>
-                    <button type='button' className={styles.add2cart} onClick={() => addItem(item, count)}>
+                    <button type='button' className={styles.add2cart} disabled={count < 1 || count > remaining} onClick={() => addItem(item, count)}>
                     <ReactSVG
                         className={styles.cartIcon}
                         src="/images/icon-cart.svg"

@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { getAdminDatabase } from "@/lib/firebaseAdmin.mjs";
 import { assertCheckoutInput, priceOrderLines } from "@/lib/orderPricing.mjs";
+import { releaseProductStock, releaseReservedStock, reserveProductStock } from "@/lib/stockReserve.mjs";
 
 function siteUrl() {
   return (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
@@ -12,8 +13,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Méthode non autorisée" });
   }
 
+  let db = null;
   let orderRef = null;
   let sessionId = null;
+  const reserved = [];
 
   try {
     const { customer, items } = assertCheckoutInput(req.body);
@@ -22,7 +25,7 @@ export default async function handler(req, res) {
       return res.status(503).json({ message: "Paiement indisponible" });
     }
 
-    const db = getAdminDatabase();
+    db = getAdminDatabase();
     const shoesById = {};
     for (const line of items) {
       const snapshot = await db.ref(`shoes/${line.id}`).get();
@@ -30,6 +33,11 @@ export default async function handler(req, res) {
     }
 
     const { lines, totalCents } = priceOrderLines(items, shoesById);
+    for (const line of lines) {
+      await reserveProductStock(db, line.id, line.quantity);
+      reserved.push(line);
+    }
+
     orderRef = db.ref("orders").push();
     await orderRef.set({
       ...customer,
@@ -69,8 +77,20 @@ export default async function handler(req, res) {
     if (sessionId) {
       await new Stripe(process.env.STRIPE_SECRET_KEY).checkout.sessions.expire(sessionId).catch(() => {});
     }
-    if (orderRef) {
-      await orderRef.remove().catch(() => {});
+    if (db && orderRef) {
+      const existing = await orderRef.get().catch(() => null);
+      if (existing?.exists()) {
+        await releaseReservedStock(db, orderRef.key).catch((releaseError) => console.error(releaseError));
+        await orderRef.remove().catch(() => {});
+      } else {
+        for (const line of reserved) {
+          await releaseProductStock(db, line.id, line.quantity).catch((releaseError) => console.error(releaseError));
+        }
+      }
+    } else if (db) {
+      for (const line of reserved) {
+        await releaseProductStock(db, line.id, line.quantity).catch((releaseError) => console.error(releaseError));
+      }
     }
     const status = error.status || 500;
     if (status >= 500) {

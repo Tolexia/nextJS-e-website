@@ -88,6 +88,12 @@ button.more {
     font-size: 25px;
 }
 
+.more:disabled {
+    color: hsl(220, 14%, 75%);
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
 .add2cart {
     cursor: pointer;
     width: 60%;
@@ -103,6 +109,16 @@ button.more {
     -webkit-box-shadow: 1px 12px 18px 3px rgba(255,237,224,1);
     -moz-box-shadow: 1px 12px 18px 3px rgba(255,237,224,1);
 }
+
+.add2cart:disabled {
+    opacity: 0.55;
+    background-color: hsl(220, 14%, 75%);
+    cursor: not-allowed;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
 .cartIcon {
     margin-right: 10px;
 }

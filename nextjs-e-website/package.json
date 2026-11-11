@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node --test tests/orderPricing.test.mjs"
+    "test": "node --test tests/orderPricing.test.mjs tests/stock.test.mjs"
   },
   "dependencies": {
     "eslint": "^8.57.1",

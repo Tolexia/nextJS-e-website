@@ -53,6 +53,7 @@ const AdminProducts = () => {
               <th>Nom</th>
               <th>Prix</th>
               <th>Marque</th>
+              <th>Stock</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -62,6 +63,7 @@ const AdminProducts = () => {
                 <td>{product.name}</td>
                 <td>${product.price}</td>
                 <td>{product.brand}</td>
+                <td>{product.stock ?? "—"}</td>
                 <td>
                   <Link href={`/admin/products/${id}/edit`}>
                     <button>Modifier</button>

@@ -6,13 +6,14 @@
 
 - [ ] Remplir `src/config/seller.js` : nom, forme juridique, adresse, SIRET, TVA, e-mail, téléphone, directeur de publication.
 - [ ] Créer `.env.local` à partir de `.env.example` : `NEXT_PUBLIC_SITE_URL`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `FIREBASE_SERVICE_ACCOUNT_JSON`.
-- [ ] Dans Stripe, ajouter le webhook `checkout.session.completed` vers `/api/stripe-webhook`.
+- [ ] Dans Stripe, ajouter les webhooks `checkout.session.completed` et `checkout.session.expired` vers `/api/stripe-webhook`.
+- [ ] Renseigner le stock de chaque produit déjà en base (admin produit). Sans entier de stock, l'achat est refusé.
 - [ ] Vérifier que le bucket Storage `nextjs-e-website.appspot.com` est actif.
 - [ ] Déployer cette version de l'app et les règles Firebase (`database` + `storage`) ensemble. Déployer les règles avant l'app couperait le checkout encore en ligne, qui écrit la commande depuis le navigateur.
 
 ## Chantiers à venir
 
-- [ ] Stock et anti-survente.
+- [x] Stock et anti-survente. La quantité est réservée au checkout et rendue si la session Stripe expire ou échoue.
 - [ ] E-mails de commande (accusé, expédition).
 - [ ] Suivi client par e-mail et numéro de commande.
 - [ ] Back-office : client, montant, et réécriture de statut sans remplacer toute la commande.

@@ -12,6 +12,7 @@ const ProductForm = ({ product, onSubmit, buttonText }) => {
       brand: product?.brand || '',
       description: product?.description || '',
       gender: product?.gender || '',
+      stock: product?.stock ?? '',
       filename: JSON.stringify(initialImages)
     });
     
@@ -42,13 +43,19 @@ const ProductForm = ({ product, onSubmit, buttonText }) => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      onSubmit(formData);
+      const stock = Number.parseInt(formData.stock, 10);
+      if (!Number.isInteger(stock) || stock < 0) {
+        setUploadError('Stock invalide');
+        return;
+      }
+      onSubmit({ ...formData, stock });
     };
 
     return (
       <form onSubmit={handleSubmit} className={styles.form}>
         <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Nom du produit" required />
         <input type="number" name="price" value={formData.price} onChange={handleInputChange} placeholder="Prix" required />
+        <input type="number" name="stock" min="0" step="1" value={formData.stock} onChange={handleInputChange} placeholder="Stock" required />
         <input type="text" name="brand" value={formData.brand} onChange={handleInputChange} placeholder="Marque" required />
         <textarea name="description" value={formData.description} onChange={handleInputChange} placeholder="Description" required />
         <select name="gender" value={formData.gender} onChange={handleInputChange} required>

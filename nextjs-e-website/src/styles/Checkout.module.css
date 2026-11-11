@@ -95,6 +95,12 @@
     font-size: 14px;
     margin-top: 3em;
 }
+
+.submitButton:disabled {
+    opacity: 0.55;
+    background-color: hsl(220, 14%, 75%);
+    cursor: not-allowed;
+}
 @media (max-width: 768px) 
 {
     .mainSection {

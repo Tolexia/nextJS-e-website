@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import { getAdminDatabase } from "@/lib/firebaseAdmin.mjs";
+import { releaseReservedStock } from "@/lib/stockReserve.mjs";
 
 export const config = {
   api: {
@@ -37,10 +38,15 @@ export default async function handler(req, res) {
     return res.status(400).end();
   }
 
+  const session = event.data.object;
+  const orderId = session.metadata?.orderId;
+  const orderIdIsSafe = typeof orderId === "string" && /^[-A-Za-z0-9_]{1,128}$/.test(orderId);
+
+  if (event.type === "checkout.session.expired" && orderIdIsSafe) {
+    await releaseReservedStock(getAdminDatabase(), orderId);
+  }
+
   if (event.type === "checkout.session.completed") {
-    const session = event.data.object;
-    const orderId = session.metadata?.orderId;
-    const orderIdIsSafe = typeof orderId === "string" && /^[-A-Za-z0-9_]{1,128}$/.test(orderId);
     if (session.payment_status === "paid" && orderIdIsSafe && session.currency === "usd") {
       const orderRef = getAdminDatabase().ref(`orders/${orderId}`);
       const snapshot = await orderRef.get();
